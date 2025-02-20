@@ -46,7 +46,7 @@ public class Menu {
                     System.out.println("Adding Patient: " + patientName + "...");
                     break;
                 case 2:
-                    System.out.print("Enter Dcotors Name: ");
+                    System.out.print("Enter Doctors Name: ");
 
                     // add logic for function here from module packages
                     String doctorName = scanner.nextLine();
