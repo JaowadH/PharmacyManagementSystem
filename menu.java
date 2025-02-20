@@ -1,9 +1,12 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class menu {
-    public static void main(String[] args) {
         // lets scanner take input
-        Scanner scanner = new Scanner(System.in);
+        private static Scanner scanner = new Scanner(System.in);
+        private static ArrayList<Medication> medications = new ArrayList<>();
+    public static void main(String[] args) {
         // sets attributes for menu
         int choice;
 
