@@ -48,7 +48,11 @@ public class Menu {
                     MenuUtils.addPatient(patients, scanner);
                     break;
                 case 2:
-                    MenuUtils.addDoctor(doctors, scanner);
+                    System.out.print("Enter Doctors Name: ");
+
+                    // add logic for function here from module packages
+                    String doctorName = scanner.nextLine();
+                    System.out.println("Adding Doctor: " + doctorName + "...");
                     break;
                 case 3:
                     MenuUtils.addMed(medications, scanner);
