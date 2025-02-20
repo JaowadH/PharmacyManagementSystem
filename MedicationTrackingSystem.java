@@ -18,3 +18,19 @@ public class MedicationTrackingSystem {
 public void addMedication(Medication medication) {
     medications.add(medication);
 }
+
+public void assignPatientToDoctor(int patientId, int doctorId) {
+    Patient patient = findPatientById(patientId);
+    Doctor doctor = findDoctorById(doctorId);
+    if (patient != null && doctor != null) {
+        doctor.addPatient(patient);
+    }
+}
+
+private Patient findPatientById(int id) {
+    return patients.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+}
+
+private Doctor findDoctorById(int id) {
+    return doctors.stream().filter(d -> d.getId() == id).findFirst().orElse(null);
+}
