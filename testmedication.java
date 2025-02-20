@@ -1,10 +1,10 @@
 import java.util.Date;
 
-public class testmedication {
+public class TestMedication {
     public static void main(String[] args) {
         // Create a Medication object
-        medication med1 = new medication(1, "Ibuprofen", "200mg", 50, null);
-        medication med2 = new medication(2, "Amoxicillin", "500mg", 30, null);
+        Medication med1 = new Medication(1, "Ibuprofen", "200mg", 50, null);
+        Medication med2 = new Medication(2, "Amoxicillin", "500mg", 30, null);
 
         // Display the details of each medication
         System.out.println("\nMedication 1:");
@@ -23,7 +23,7 @@ public class testmedication {
         System.out.println("Expiry Date: " + med2.getExpiryDate());
         System.out.println();
 
-        // edit details of med 1
+        // edit details of med 1SS
         med1.setMedID(3);
         med1.setMedName("Adderall");
         med1.setDose("300mg");
