@@ -34,3 +34,13 @@ private Patient findPatientById(int id) {
 private Doctor findDoctorById(int id) {
     return doctors.stream().filter(d -> d.getId() == id).findFirst().orElse(null);
 }
+import java.util.Date;
+
+public void checkExpiredMedications() {
+    Date today = new Date();
+    for (Medication m : medications) {
+        if (m.getExpiryDate().before(today)) {
+            System.out.println(m.getName() + " has expired!");
+        }
+    }
+}
