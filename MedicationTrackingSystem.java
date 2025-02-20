@@ -15,3 +15,6 @@ public class MedicationTrackingSystem {
         doctors.add(doctor);
     }
 }
+public void addMedication(Medication medication) {
+    medications.add(medication);
+}
