@@ -94,6 +94,10 @@ public class Medication {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(expiryDate);
     }
+// had to pull a object back, cannot compare object to string. Upper line needs fixing as well.
+    public Date getExpiryDateObject() {
+        return expiryDate;
+    }
 
     // toString method
     @Override
