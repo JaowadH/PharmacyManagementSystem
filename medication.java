@@ -2,7 +2,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class medication {
+public class Medication {
     private int medID;
     private String medName;
     private String dose;
@@ -10,7 +10,7 @@ public class medication {
     private Date expiryDate;
 
     //constructor
-    public medication(int medID, String medName, String dose, int quantity, Date expiryDate) {
+    public Medication(int medID, String medName, String dose, int quantity, Date expiryDate) {
         this.medID = medID;
         this.medName = medName;
         this.dose = dose;
