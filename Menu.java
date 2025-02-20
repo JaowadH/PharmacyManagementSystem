@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 
@@ -53,11 +54,7 @@ public class Menu {
                     System.out.println("Adding Doctor: " + doctorName + "...");
                     break;
                 case 3:
-                    System.out.print("Enter Medication Name: ");
-
-                    // add logic for function here from module packages
-                    String medName = scanner.nextLine();
-                    System.out.println("Adding Medication: " + medName + "...");
+                    addMed();
                     break;
                 case 4:
                     System.out.println("Generating systems report...");
@@ -103,4 +100,61 @@ public class Menu {
         } while ( choice != 10);
         scanner.close();
     }
+
+    // setters for menu
+    private static void addMed() {
+        // adding med id
+        System.out.print("Enter Medication ID: ");
+        int medID = scanner.nextInt();
+        scanner.nextLine(); // removes newLine for nextLine
+
+        // adding med name
+        System.out.print("Enter Medication Name: ");
+        String medName = scanner.nextLine();
+
+        // adding med dose
+        System.out.print("Enter Dosage: ");
+        String dose = scanner.nextLine();
+
+        // adding quantity
+        System.out.print("Enter Quantity: ");
+        int quantity = scanner.nextInt();
+        scanner.nextLine();
+
+        // med object
+        Medication newMed = new Medication(medID, medName, dose, quantity, new Date());
+        medications.add(newMed);
+        System.out.println("New Medication added: " + newMed);
+    }
+
+    // System report print
+    private static void printSystemReport() {
+        System.out.print("\n System Report \n");
+        if (medications.isEmpty()) {
+            System.out.println("No Medications in system yet.");
+        } else {
+            for (Medication med : medications) {
+                System.out.println(med);
+            }
+        }
+    }
+
+    // checking expired meds
+    private static void checkExpiredMeds() {
+        Date currDate = new Date();
+
+        System.out.println("\n Expired Medications \n");
+        boolean hasExpired = false;
+        for (Medication med : medications) {
+            if (med.getExpiryDateObject().compareTo(currDate) < 0 ) {
+                System.out.println("Expired: " + med);
+                hasExpired = true;
+            }
+        }
+
+        if (!hasExpired) {
+            System.out.println("No Expired Medications yet.");
+        }
+    }
 }
+
