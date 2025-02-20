@@ -12,7 +12,7 @@ public class TestMedication {
         System.out.println("Name: " + med1.getMedName());
         System.out.println("Dosage: " + med1.getDose());
         System.out.println("Quantity: " + med1.getQuantity());
-        System.out.println("Expiry Date: " + med1.getExpiryDate());
+        System.out.println("Expiry Date: " + med1.getExpiryDateString());
         System.out.println();
 
         System.out.println("\nMedication 2:");
@@ -20,10 +20,10 @@ public class TestMedication {
         System.out.println("Name: " + med2.getMedName());
         System.out.println("Dosage: " + med2.getDose());
         System.out.println("Quantity: " + med2.getQuantity());
-        System.out.println("Expiry Date: " + med2.getExpiryDate());
+        System.out.println("Expiry Date: " + med2.getExpiryDateString());
         System.out.println();
 
-        // edit details of med 1SS
+        // edit details of med 1
         med1.setMedID(3);
         med1.setMedName("Adderall");
         med1.setDose("300mg");
@@ -36,7 +36,7 @@ public class TestMedication {
         System.out.println("Name: " + med1.getMedName());
         System.out.println("Dosage: " + med1.getDose());
         System.out.println("Quantity: " + med1.getQuantity());
-        System.out.println("Expiry Date: " + med1.getExpiryDate());
+        System.out.println("Expiry Date: " + med1.getExpiryDateString());
         System.out.println();
     }
 }
