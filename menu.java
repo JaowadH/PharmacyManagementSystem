@@ -21,10 +21,12 @@ public class menu {
             System.out.println("8. Restock the drugs in the Pharmacy");
             System.out.println("9. Print all Scripts for specified Patient");
             System.out.println("10. Exit");
+            System.out.print("Enter your choice: ");
             // input must be integer
 
             while (!scanner.hasNextInt()) {
                 System.out.println("ERROR: Invalid input, Please enter a number between 1 and 10.");
+                System.out.print("Enter your Choice: ");
                 scanner.next();
             }
             choice = scanner.nextInt();
@@ -34,16 +36,25 @@ public class menu {
             // switch case for handling choice
             switch ( choice ) {
                 case 1:
-                    System.out.println("Adding a new patient...");
+                    System.out.print("Enter Patient Name: ");
+
                     // add logic for function here from module packages
+                    String patientName = scanner.nextLine();
+                    System.out.println("Adding Patient: " + patientName + "...");
                     break;
                 case 2:
-                    System.out.println("Adding a new Doctor...");
+                    System.out.print("Enter Dcotors Name: ");
+
                     // add logic for function here from module packages
+                    String doctorName = scanner.nextLine();
+                    System.out.println("Adding Doctor: " + doctorName + "...");
                     break;
                 case 3:
-                    System.out.println("Adding a new medication...");
+                    System.out.print("Enter Medication Name: ");
+
                     // add logic for function here from module packages
+                    String medName = scanner.nextLine();
+                    System.out.println("Adding Medication: " + medName + "...");
                     break;
                 case 4:
                     System.out.println("Generating systems report...");
@@ -54,11 +65,17 @@ public class menu {
                     // add logic for function here from module packages
                     break;
                 case 6:
-                    System.out.println("Processing a new prescription...");
+                    System.out.print("Enter Patients name for prescription: ");
+                    String prescriptPatient = scanner.nextLine();
+                    System.out.print("Enter Medication Name: ");
+                    String prescriptMed = scanner.nextLine();
+                    System.out.println("Processing prescription for " + prescriptPatient + ", With Drug: " + prescriptMed + "...");
                     // add logic for function here from module packages
                     break;
                 case 7:
-                    System.out.println("Printing all prescriptions for specified doctor...");
+                    System.out.print("Enter Doctor's name to view prescriptions: ");
+                    String scriptDoc = scanner.nextLine();
+                    System.out.println("Fetching prescriptions for Dr. " + scriptDoc + "...");
                     // add logic for function here from module packages
                     break;
                 case 8:
@@ -66,7 +83,9 @@ public class menu {
                     // add logic for function here from module packages
                     break;
                 case 9:
-                    System.out.println("Printing all prescriptions for specified patient...");
+                    System.out.print("Enter patients name to view prescriptions: ");
+                    String scriptPatient = scanner.nextLine();
+                    System.out.println("Fetching prescriptions for " + scriptPatient + "...");
                     // add logic for function here from module packages
                     break;
                 case 10:
@@ -76,7 +95,7 @@ public class menu {
 
                     // remove default for prod
                 default:
-                    System.out.println("ERROR NOT A CHOICE");
+                    System.out.println("ERROR: Invalid input, Please enter a number between 1 and 10.");
             }
         } while ( choice != 10);
         scanner.close();
