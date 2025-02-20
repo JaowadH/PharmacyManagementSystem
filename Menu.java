@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class menu {
+public class Menu {
         // lets scanner take input
         private static Scanner scanner = new Scanner(System.in);
         private static ArrayList<Medication> medications = new ArrayList<>();
