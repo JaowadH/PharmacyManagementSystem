@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MedicationTrackingSystem {
@@ -14,33 +15,76 @@ public class MedicationTrackingSystem {
     public void addDoctor(Doctor doctor) {
         doctors.add(doctor);
     }
-}
-public void addMedication(Medication medication) {
-    medications.add(medication);
-}
 
-public void assignPatientToDoctor(int patientId, int doctorId) {
-    Patient patient = findPatientById(patientId);
-    Doctor doctor = findDoctorById(doctorId);
-    if (patient != null && doctor != null) {
-        doctor.addPatient(patient);
+    public void addMedication(Medication medication) {
+        medications.add(medication);
+    }
+
+    public void assignPatientToDoctor(int patientId, int doctorId) {
+        Patient patient = findPatientById(patientId);
+        Doctor doctor = findDoctorById(doctorId);
+        if (patient != null && doctor != null) {
+            doctor.addPatient(patient);
+        }
+    }
+
+    private Patient findPatientById(int id) {
+        return patients.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+    }
+
+    private Doctor findDoctorById(int id) {
+        return doctors.stream().filter(d -> d.getId() == id).findFirst().orElse(null);
+    }
+
+    public void checkExpiredMedications() {
+        Date today = new Date();
+        for (Medication m : medications) {
+            if (m.getExpiryDate().before(today)) {
+                System.out.println(m.getName() + " has expired!");
+            }
+        }
     }
 }
 
-private Patient findPatientById(int id) {
-    return patients.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
+// Placeholder Patient Class
+class Patient {
+    private int id;
+    private String name;
+
+    public Patient(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 
-private Doctor findDoctorById(int id) {
-    return doctors.stream().filter(d -> d.getId() == id).findFirst().orElse(null);
-}
-import java.util.Date;
+// Placeholder Doctor Class
+class Doctor {
+    private int id;
+    private String name;
+    private List<Patient> assignedPatients = new ArrayList<>();
 
-public void checkExpiredMedications() {
-    Date today = new Date();
-    for (Medication m : medications) {
-        if (m.getExpiryDate().before(today)) {
-            System.out.println(m.getName() + " has expired!");
-        }
+    public Doctor(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void addPatient(Patient patient) {
+        assignedPatients.add(patient);
     }
 }

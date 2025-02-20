@@ -1,12 +1,12 @@
 # Pharmacy Management System
-## Menu app
+## MedicationTrackingSystem
 ***
-This .java class contains the main logic for the menu as well as the main entry point for users.
+This class manages patients, doctors, medications, and prescriptions in the system.
 
-- Handles errors gracefully by capturing `nextLineInt`
-- Makes use of both `print` & `printLn` statements of `system.out`
-- Handles logic for Patient and doctor names
-
+-Adds and assigns patients to doctors.
+-Stores and retrieves medications.
+-Checks for expired medications using the current date.
+-Uses Java Streams for efficient patient and doctor lookup.
 
 > PlaceHolders added
 
