@@ -29,7 +29,7 @@ public class MenuUtils {
         // med object
         Medication newMed = new Medication(medID, medName, dose, quantity);
         medications.add(newMed);
-        System.out.println("New medTracker.Medication added: " + newMed);
+        System.out.println("New Medication added: " + newMed);
 
         }
         // checking expired meds

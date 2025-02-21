@@ -20,7 +20,7 @@ public class Menu {
             System.out.println("What would you like to do?");
             System.out.println("1. Add a New Patient");
             System.out.println("2. Add a New Doctor");
-            System.out.println("3. Add a medTracker.Medication to the Pharmacy");
+            System.out.println("3. Add a Medication to the Pharmacy");
             System.out.println("4. Print System Report");
             System.out.println("5. Check if Meds are Expired");
             System.out.println("6. Process a New Prescription");
@@ -68,7 +68,7 @@ public class Menu {
                 case 6:
                     System.out.print("Enter Patients name for prescription: ");
                     String prescriptPatient = scanner.nextLine();
-                    System.out.print("Enter medTracker.Medication Name: ");
+                    System.out.print("Enter Medication Name: ");
                     String prescriptMed = scanner.nextLine();
                     System.out.println("Processing prescription for " + prescriptPatient + ", With Drug: " + prescriptMed + "...");
                     // add logic for function here from module packages
