@@ -15,7 +15,7 @@ public class Prescription {
         this.doctor = doctor;
         this.patient = patient;
         this.medication = medication;
-        this.prescriptionExpiry = prescriptionExpiry;
+        this.prescriptionExpiry = generatePrescriptionExpiry();
     }
 
     // generate prescription expiry (default is 1 year from date issued(date issued is current system date))
@@ -58,7 +58,15 @@ public class Prescription {
         this.medication = medication;
     }
 
-    public String getPrescriptionExpiry() {
+    public Date getPrescriptionExpiry() {
+        return prescriptionExpiry;
+    }
+
+    public void setPrescriptionExpiry(Date prescriptionExpiry) {
+        this.prescriptionExpiry = prescriptionExpiry;
+    }
+
+    public String getPrescriptionExpiryString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(prescriptionExpiry);
     }
@@ -66,13 +74,12 @@ public class Prescription {
     // to string
     @Override
     public String toString() {
-        return "Prescription{" +
-                "ID=" + prescriptionID +
-                ", doctor=" + doctor.getName() +
-                ", patient=" + patient.getName() +
-                ", medication=" + medication.getMedName() +
-                ", prescriptionExpiry=" + getPrescriptionExpiry() +
-                '}';
+        return "\nPrescription" +
+                "\nID: " + prescriptionID +
+                "\ndoctor: " + doctor.getName() +
+                "\npatient: " + patient.getName() +
+                "\nmedication: " + medication.getMedName() +
+                "\nprescriptionExpiry: " + getPrescriptionExpiry() +
+                "\n";
     }
-
 }
