@@ -1,3 +1,5 @@
+package medTracker;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,10 +63,6 @@ public class Medication {
     public Date getExpiryDate() {
         return expiryDate;
     }
-// had to pull a object back, cannot compare object to string. Upper line needs fixing as well.
-    public Date getExpiryDateObject() {
-        return expiryDate;
-    }
 
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
@@ -79,7 +77,7 @@ public class Medication {
     // toString method
     @Override
     public String toString() {
-        return "Medication{" +
+        return "medTracker.Medication{" +
                 "medID=" + medID +
                 ", medName='" + medName + '\'' +
                 ", dose='" + dose + '\'' +
