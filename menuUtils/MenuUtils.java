@@ -29,7 +29,7 @@ public class MenuUtils {
         // med object
         Medication newMed = new Medication(medID, medName, dose, quantity);
         medications.add(newMed);
-        System.out.println("New Medication added: " + newMed);
+        System.out.println("New medTracker.Medication added: " + newMed);
 
         }
         // checking expired meds
@@ -59,48 +59,5 @@ public class MenuUtils {
                 System.out.println(med);
             }
         }
-    }
-
-    public static void addPatient(List<Patient> patients, Scanner scanner) {
-        System.out.print("Enter Patient ID: ");
-        int patientID = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter Patient Name: ");
-        String patientName = scanner.nextLine();
-
-        System.out.print("Enter Patient Age: ");
-        int patientAge = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter Patient Phone number: ");
-        String patientPhoneNumber = scanner.nextLine();
-
-        // patient object
-        Patient newPatient = new Patient(patientID, patientName, patientAge, patientPhoneNumber);
-        System.out.println("New Patient added: " + newPatient);
-    }
-
-
-    public static void addDoctor(List<Doctor> doctors, Scanner scanner) {
-        System.out.print("Enter Doctors ID: ");
-        int doctorID = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter Doctors Name: ");
-        String doctorName = scanner.nextLine();
-
-        System.out.print("Enter Doctors Age: ");
-        int doctorAge = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter Doctors Phone Number: ");
-        String doctorPhoneNumber = scanner.nextLine();
-
-        System.out.print("Enter Doctors Specialization: ");
-        String Spec = scanner.nextLine();
-
-
-        Doctor newDoctor = new Doctor(doctorID, doctorName, doctorAge, doctorPhoneNumber, Spec);
     }
 }

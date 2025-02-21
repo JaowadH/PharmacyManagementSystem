@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
 import medTracker.Doctor;
@@ -11,8 +10,6 @@ public class Menu {
         // lets scanner take input
         private static final Scanner scanner = new Scanner(System.in);
         private static final ArrayList<Medication> medications = new ArrayList<>();
-        private static final ArrayList<Patient> patients = new ArrayList<>();
-        private static final ArrayList<Doctor> doctors = new ArrayList<>();
     public static void main(String[] args) {
         // sets attributes for menu
         int choice;
@@ -46,7 +43,11 @@ public class Menu {
             // switch case for handling choice
             switch ( choice ) {
                 case 1:
-                    MenuUtils.addPatient(patients, scanner);
+                    System.out.print("Enter Patient Name: ");
+
+                    // add logic for function here from module packages
+                    String patientName = scanner.nextLine();
+                    System.out.println("Adding Patient: " + patientName + "...");
                     break;
                 case 2:
                     System.out.print("Enter Doctors Name: ");
@@ -99,39 +100,6 @@ public class Menu {
             }
         } while ( choice != 10);
         scanner.close();
-    }
-
-    // setters for menu
-
-
-    // System report print
-    private static void printSystemReport() {
-        System.out.print("\n System Report \n");
-        if (medications.isEmpty()) {
-            System.out.println("No Medications in system yet.");
-        } else {
-            for (Medication med : medications) {
-                System.out.println(med);
-            }
-        }
-    }
-
-    // checking expired meds
-    private static void checkExpiredMeds() {
-        Date currDate = new Date();
-
-        System.out.println("\n Expired Medications \n");
-        boolean hasExpired = false;
-        for (Medication med : medications) {
-            if (med.getExpiryDate().compareTo(currDate) < 0 ) {
-                System.out.println("Expired: " + med);
-                hasExpired = true;
-            }
-        }
-
-        if (!hasExpired) {
-            System.out.println("No Expired Medications yet.");
-        }
     }
 }
 
