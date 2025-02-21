@@ -30,5 +30,34 @@ public class MenuUtils {
         Medication newMed = new Medication(medID, medName, dose, quantity, new Date());
         medications.add(newMed);
         System.out.println("New medTracker.Medication added: " + newMed);
+
+        }
+        // checking expired meds
+        public static void checkExpiredMeds( List<Medication> medications ) {
+            Date currDate = new Date();
+
+            System.out.println("\n Expired Medications \n");
+            boolean hasExpired = false;
+            for (Medication med : medications) {
+                if (med.getExpiryDate().compareTo(currDate) < 0 ) {
+                    System.out.println("Expired: " + med);
+                    hasExpired = true;
+                }
+            }
+
+            if (!hasExpired) {
+                System.out.println("No Expired Medications yet.");
+            }
+        }
+    // System report print
+    public static void printSystemReport(List<Medication> medications) {
+        System.out.print("\n System Report \n");
+        if (medications.isEmpty()) {
+            System.out.println("No Medications in system yet.");
+        } else {
+            for (Medication med : medications) {
+                System.out.println(med);
+            }
+        }
     }
 }

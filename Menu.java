@@ -1,13 +1,12 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 import menuUtils.MenuUtils;
 import medTracker.Medication;
 
 public class Menu {
         // lets scanner take input
-        private static Scanner scanner = new Scanner(System.in);
-        private static ArrayList<Medication> medications = new ArrayList<>();
+        private static final Scanner scanner = new Scanner(System.in);
+        private static final ArrayList<Medication> medications = new ArrayList<>();
     public static void main(String[] args) {
         // sets attributes for menu
         int choice;
@@ -100,39 +99,6 @@ public class Menu {
             }
         } while ( choice != 10);
         scanner.close();
-    }
-
-    // setters for menu
-
-
-    // System report print
-    private static void printSystemReport() {
-        System.out.print("\n System Report \n");
-        if (medications.isEmpty()) {
-            System.out.println("No Medications in system yet.");
-        } else {
-            for (Medication med : medications) {
-                System.out.println(med);
-            }
-        }
-    }
-
-    // checking expired meds
-    private static void checkExpiredMeds() {
-        Date currDate = new Date();
-
-        System.out.println("\n Expired Medications \n");
-        boolean hasExpired = false;
-        for (Medication med : medications) {
-            if (med.getExpiryDate().compareTo(currDate) < 0 ) {
-                System.out.println("Expired: " + med);
-                hasExpired = true;
-            }
-        }
-
-        if (!hasExpired) {
-            System.out.println("No Expired Medications yet.");
-        }
     }
 }
 

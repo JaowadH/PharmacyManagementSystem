@@ -9,7 +9,7 @@ public class Prescription {
     private Doctor doctor;
     private Patient patient;
     private Medication medication;
-    private Date prescriptionExpiry;
+    private final Date prescriptionExpiry;
 
     // constructor
     public Prescription(int prescriptionID, Doctor doctor, Patient patient, Medication medication, Date prescriptionExpiry) {
