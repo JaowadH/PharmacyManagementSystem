@@ -9,12 +9,12 @@ import medTracker.*;
 public class MenuUtils {
     public static void addMed(List<Medication> medications, Scanner scanner) {
         // adding med id
-        System.out.print("Enter medTracker.Medication ID: ");
+        System.out.print("Enter Medication ID: ");
         int medID = scanner.nextInt();
         scanner.nextLine(); // removes newLine for nextLine
 
         // adding med name
-        System.out.print("Enter medTracker.Medication Name: ");
+        System.out.print("Enter Medication Name: ");
         String medName = scanner.nextLine();
 
         // adding med dose
@@ -29,7 +29,7 @@ public class MenuUtils {
         // med object
         Medication newMed = new Medication(medID, medName, dose, quantity, new Date());
         medications.add(newMed);
-        System.out.println("New medTracker.Medication added: " + newMed);
+        System.out.println("New Medication added: " + newMed);
 
         }
         // checking expired meds
