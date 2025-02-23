@@ -1,10 +1,6 @@
 name: Enforce Project Structure
 
-<<<<<<< HEAD
 on: [push, pull_request]
-=======
-on: [pull_request]
->>>>>>> 12aed71 (Create structure-enforcer.yml)
 
 jobs:
   structure-check: 

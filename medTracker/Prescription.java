@@ -1,7 +1,5 @@
 package medTracker;
 
-package medTracker;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,13 +83,5 @@ public class Prescription {
                 "\nmedication: " + medication.getMedName() +
                 "\nprescriptionExpiry: " + getPrescriptionExpiry() +
                 "\n";
-        return "\nPrescription" +
-                "\nID: " + prescriptionID +
-                "\ndoctor: " + doctor.getName() +
-                "\npatient: " + patient.getName() +
-                "\nmedication: " + medication.getMedName() +
-                "\nprescriptionExpiry: " + getPrescriptionExpiry() +
-                "\n";
     }
-}
 }
