@@ -1,0 +1,17 @@
+name: Enforce Project Structure
+
+on: [pull_request]
+
+jobs:
+  structure-check: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Validate Java file locations
+        run: |
+          if find PharmacyManagementSystem -type f -name "*.java" | grep -vE "^PharmacyManagementSystem/(medTracker|menuUtils|Menu.java)$"; then
+            echo "Error: Java files are not in the correct structure!"
+            exit 1
+          fi

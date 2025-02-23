@@ -77,7 +77,7 @@ public class Medication {
     // toString method
     @Override
     public String toString() {
-        return "medTracker.Medication{" +
+        return "Medication{" +
                 "medID=" + medID +
                 ", medName='" + medName + '\'' +
                 ", dose='" + dose + '\'' +
