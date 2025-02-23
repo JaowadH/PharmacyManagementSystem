@@ -14,7 +14,7 @@ public class Medication {
     private Date expiryDate;
 
     // Constructor
-    public Medication(int medID, String medName, String dose, int quantity) {
+    public Medication(int medID, String medName, String dose, int quantity, Date manufactureDate, Date expiryDate) {
         this.medID = medID;
         this.medName = medName;
         this.dose = dose;
@@ -43,7 +43,7 @@ public class Medication {
         return calendar.getTime();
     }
 
-    // Getters and setters
+    // Getters and Setters
     public int getMedID() {
         return medID;
     }
@@ -93,10 +93,6 @@ public class Medication {
     public String getExpiryDateString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(expiryDate);
-    }
-// had to pull a object back, cannot compare object to string. Upper line needs fixing as well.
-    public Date getExpiryDateObject() {
-        return expiryDate;
     }
 
     // toString method
