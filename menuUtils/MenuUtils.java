@@ -27,7 +27,7 @@ public class MenuUtils {
         scanner.nextLine();
 
         // med object
-        Medication newMed = new Medication(medID, medName, dose, quantity, new Date());
+        Medication newMed = new Medication(medID, medName, dose, quantity);
         medications.add(newMed);
         System.out.println("New Medication added: " + newMed);
 
