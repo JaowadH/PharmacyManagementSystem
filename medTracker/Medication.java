@@ -3,31 +3,47 @@ package medTracker;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Random;
 
 public class Medication {
     private int medID;
     private String medName;
     private String dose;
     private int quantity;
+    private Date manufactureDate;
     private Date expiryDate;
 
     // Constructor
-    public Medication(int medID, String medName, String dose, int quantity, Date expiryDate) {
+    public Medication(int medID, String medName, String dose, int quantity) {
         this.medID = medID;
         this.medName = medName;
         this.dose = dose;
         this.quantity = quantity;
+        this.manufactureDate = generateManufactureDate();
         this.expiryDate = generateExpiryDate();
     }
 
-    // Generates an expiry date 2 years from today
-    private Date generateExpiryDate() {
+    // Generate a manufacture date within the last 2 years
+    private Date generateManufactureDate() {
+        Random random = new Random();
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.YEAR, 2);
+        
+        // Subtract up to 730 days (2 years)
+        int daysToSubtract = random.nextInt(731); // 0 to 730 days
+        calendar.add(Calendar.DAY_OF_YEAR, -daysToSubtract);
+        
         return calendar.getTime();
     }
 
-    // Getters and Setters
+    // Generate expiry date exactly 2 years from manufacture date
+    private Date generateExpiryDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(manufactureDate); // Set to manufacture date
+        calendar.add(Calendar.YEAR, 2); // Add 2 years
+        return calendar.getTime();
+    }
+
+    // Getters and setters
     public int getMedID() {
         return medID;
     }
@@ -60,15 +76,20 @@ public class Medication {
         this.quantity = quantity;
     }
 
+    public Date getManufactureDate() {
+        return manufactureDate;
+    }
+
     public Date getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
+    // Format dates for display
+    public String getManufactureDateString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(manufactureDate);
     }
 
-    // Returns expiry date as a formatted string (YYYY-MM-DD)
     public String getExpiryDateString() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         return dateFormat.format(expiryDate);
@@ -82,6 +103,7 @@ public class Medication {
                 ", medName='" + medName + '\'' +
                 ", dose='" + dose + '\'' +
                 ", quantity=" + quantity +
+                ", manufactureDate=" + getManufactureDateString() +
                 ", expiryDate=" + getExpiryDateString() +
                 '}';
     }
