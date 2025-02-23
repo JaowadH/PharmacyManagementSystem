@@ -1,6 +1,6 @@
 name: Enforce Project Structure
 
-on: [pull_request]
+on: [push, pull_request]
 
 jobs:
   structure-check: 
