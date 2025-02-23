@@ -10,6 +10,8 @@ public class Menu {
         // lets scanner take input
         private static final Scanner scanner = new Scanner(System.in);
         private static final ArrayList<Medication> medications = new ArrayList<>();
+        private static final ArrayList<Patient> patients = new ArrayList<>();
+        private static final ArrayList<Doctor> doctors = new ArrayList<>();
     public static void main(String[] args) {
         // sets attributes for menu
         int choice;
@@ -43,18 +45,10 @@ public class Menu {
             // switch case for handling choice
             switch ( choice ) {
                 case 1:
-                    System.out.print("Enter Patient Name: ");
-
-                    // add logic for function here from module packages
-                    String patientName = scanner.nextLine();
-                    System.out.println("Adding Patient: " + patientName + "...");
+                    MenuUtils.addPatient(patients, scanner);
                     break;
                 case 2:
-                    System.out.print("Enter Doctors Name: ");
-
-                    // add logic for function here from module packages
-                    String doctorName = scanner.nextLine();
-                    System.out.println("Adding Doctor: " + doctorName + "...");
+                    MenuUtils.addDoctor(doctors, scanner);
                     break;
                 case 3:
                     MenuUtils.addMed(medications, scanner);
