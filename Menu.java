@@ -1,12 +1,17 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Scanner;
 
+import medTracker.Doctor;
+import medTracker.Patient;
+import menuUtils.MenuUtils;
+import medTracker.Medication;
 
 public class Menu {
         // lets scanner take input
-        private static Scanner scanner = new Scanner(System.in);
-        private static ArrayList<Medication> medications = new ArrayList<>();
+        private static final Scanner scanner = new Scanner(System.in);
+        private static final ArrayList<Medication> medications = new ArrayList<>();
+        private static final ArrayList<Patient> patients = new ArrayList<>();
+        private static final ArrayList<Doctor> doctors = new ArrayList<>();
     public static void main(String[] args) {
         // sets attributes for menu
         int choice;
@@ -40,29 +45,19 @@ public class Menu {
             // switch case for handling choice
             switch ( choice ) {
                 case 1:
-                    System.out.print("Enter Patient Name: ");
-
-                    // add logic for function here from module packages
-                    String patientName = scanner.nextLine();
-                    System.out.println("Adding Patient: " + patientName + "...");
+                    MenuUtils.addPatient(patients, scanner);
                     break;
                 case 2:
-                    System.out.print("Enter Doctors Name: ");
-
-                    // add logic for function here from module packages
-                    String doctorName = scanner.nextLine();
-                    System.out.println("Adding Doctor: " + doctorName + "...");
+                    MenuUtils.addDoctor(doctors, scanner);
                     break;
                 case 3:
-                    addMed();
+                    MenuUtils.addMed(medications, scanner);
                     break;
                 case 4:
-                    System.out.println("Generating systems report...");
-                    // add logic for function here from module packages
+                    MenuUtils.printSystemReport(medications);
                     break;
                 case 5:
-                    System.out.println("Checking expired medications...");
-                    // add logic for function here from module packages
+                    MenuUtils.checkExpiredMeds(medications);
                     break;
                 case 6:
                     System.out.print("Enter Patients name for prescription: ");
@@ -73,7 +68,7 @@ public class Menu {
                     // add logic for function here from module packages
                     break;
                 case 7:
-                    System.out.print("Enter Doctor's name to view prescriptions: ");
+                    System.out.print("Enter medTracker.Doctor's name to view prescriptions: ");
                     String scriptDoc = scanner.nextLine();
                     System.out.println("Fetching prescriptions for Dr. " + scriptDoc + "...");
                     // add logic for function here from module packages
@@ -99,62 +94,6 @@ public class Menu {
             }
         } while ( choice != 10);
         scanner.close();
-    }
-
-    // setters for menu
-    private static void addMed() {
-        // adding med id
-        System.out.print("Enter Medication ID: ");
-        int medID = scanner.nextInt();
-        scanner.nextLine(); // removes newLine for nextLine
-
-        // adding med name
-        System.out.print("Enter Medication Name: ");
-        String medName = scanner.nextLine();
-
-        // adding med dose
-        System.out.print("Enter Dosage: ");
-        String dose = scanner.nextLine();
-
-        // adding quantity
-        System.out.print("Enter Quantity: ");
-        int quantity = scanner.nextInt();
-        scanner.nextLine();
-
-        // med object
-        Medication newMed = new Medication(medID, medName, dose, quantity, new Date());
-        medications.add(newMed);
-        System.out.println("New Medication added: " + newMed);
-    }
-
-    // System report print
-    private static void printSystemReport() {
-        System.out.print("\n System Report \n");
-        if (medications.isEmpty()) {
-            System.out.println("No Medications in system yet.");
-        } else {
-            for (Medication med : medications) {
-                System.out.println(med);
-            }
-        }
-    }
-
-    // checking expired meds
-    private static void checkExpiredMeds() {
-        Date currDate = new Date();
-
-        System.out.println("\n Expired Medications \n");
-        boolean hasExpired = false;
-        for (Medication med : medications) {
-            if (med.getExpiryDateObject().compareTo(currDate) < 0 ) {
-                System.out.println("Expired: " + med);
-                hasExpired = true;
-            }
-        }
-
-        if (!hasExpired) {
-            System.out.println("No Expired Medications yet.");
-        }
     }
 }
 

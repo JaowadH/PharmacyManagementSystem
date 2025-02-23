@@ -1,3 +1,5 @@
+package medTracker;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,7 +11,7 @@ public class Medication {
     private int quantity;
     private Date expiryDate;
 
-    //constructor
+    // Constructor
     public Medication(int medID, String medName, String dose, int quantity, Date expiryDate) {
         this.medID = medID;
         this.medName = medName;
@@ -18,14 +20,14 @@ public class Medication {
         this.expiryDate = generateExpiryDate();
     }
 
+    // Generates an expiry date 2 years from today
     private Date generateExpiryDate() {
-        Calendar calendar = Calendar.getInstance(); // Get current date
-        calendar.add(Calendar.YEAR, 2); // Add 2 years
-        return calendar.getTime(); // Return updated date
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.YEAR, 2);
+        return calendar.getTime();
     }
 
-    // getters and setters
-
+    // Getters and Setters
     public int getMedID() {
         return medID;
     }
@@ -58,12 +60,7 @@ public class Medication {
         this.quantity = quantity;
     }
 
-    public String getExpiryDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        return dateFormat.format(expiryDate);
-    }
-// had to pull a object back, cannot compare object to string. Upper line needs fixing as well.
-    public Date getExpiryDateObject() {
+    public Date getExpiryDate() {
         return expiryDate;
     }
 
@@ -71,10 +68,13 @@ public class Medication {
         this.expiryDate = expiryDate;
     }
 
-    // methods
+    // Returns expiry date as a formatted string (YYYY-MM-DD)
+    public String getExpiryDateString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        return dateFormat.format(expiryDate);
+    }
 
-
-    // to string method
+    // toString method
     @Override
     public String toString() {
         return "Medication{" +
@@ -82,7 +82,7 @@ public class Medication {
                 ", medName='" + medName + '\'' +
                 ", dose='" + dose + '\'' +
                 ", quantity=" + quantity +
-                ", expiryDate=" + expiryDate +
+                ", expiryDate=" + getExpiryDateString() +
                 '}';
     }
 }
