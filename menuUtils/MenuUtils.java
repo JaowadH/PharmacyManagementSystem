@@ -9,9 +9,18 @@ import medTracker.*;
 public class MenuUtils {
     public static void addMed(List<Medication> medications, Scanner scanner) {
         // adding med id
-        System.out.print("Enter Medication ID: ");
-        int medID = scanner.nextInt();
-        scanner.nextLine(); // removes newLine for nextLine
+        int medID;
+        while (true) {
+            System.out.print("Enter Medication ID: ");
+            if (scanner.hasNextInt()) {
+                medID = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } else {
+                System.out.println("ERROR: Invalid input, Please enter a number for ID.");
+                scanner.next();
+            }
+        }
 
         // adding med name
         System.out.print("Enter Medication Name: ");
@@ -22,9 +31,18 @@ public class MenuUtils {
         String dose = scanner.nextLine();
 
         // adding quantity
-        System.out.print("Enter Quantity: ");
-        int quantity = scanner.nextInt();
-        scanner.nextLine();
+        int quantity;
+        while (true) {
+            System.out.print("Enter Quantity: ");
+            if (scanner.hasNextInt()) {
+                quantity = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } else {
+                System.out.println("ERROR: Invalid input, Please enter a number for Quantity.");
+                scanner.next();
+            }
+        }
 
         // med object
         Medication newMed = new Medication(medID, medName, dose, quantity);
@@ -62,16 +80,34 @@ public class MenuUtils {
     }
 
     public static void addPatient(List<Patient> patients, Scanner scanner) {
-        System.out.print("Enter Patient ID: ");
-        int patientID = scanner.nextInt();
-        scanner.nextLine();
+        int patientID;
+        while (true) {
+            System.out.print("Enter Patient ID: ");
+            if (scanner.hasNextInt()) {
+                patientID = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } else {
+                System.out.println("ERROR: Invalid input, Please enter a number for Patient ID.");
+                scanner.next();
+            }
+        }
 
         System.out.print("Enter Patient Name: ");
         String patientName = scanner.nextLine();
 
-        System.out.print("Enter Patient Age: ");
-        int patientAge = scanner.nextInt();
-        scanner.nextLine();
+        int patientAge;
+        while (true) {
+            System.out.print("Enter Patient Age: ");
+            if (scanner.hasNextInt()) {
+                patientAge = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } else {
+                System.out.println("ERROR: Invalid input, Please enter a number for Patient Age.");
+                scanner.next();
+            }
+        }
 
         System.out.print("Enter Patient Phone number: ");
         String patientPhoneNumber = scanner.nextLine();
@@ -83,16 +119,34 @@ public class MenuUtils {
 
 
     public static void addDoctor(List<Doctor> doctors, Scanner scanner) {
-        System.out.print("Enter Doctors ID: ");
-        int doctorID = scanner.nextInt();
-        scanner.nextLine();
+        int doctorID;
+        while (true) {
+            System.out.print("Enter Doctors ID: ");
+            if (scanner.hasNextInt()) {
+                doctorID = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } else {
+                System.out.println("ERROR: Invalid input, Please enter a number for Doctor ID.");
+                scanner.next();
+            }
+        }
 
         System.out.print("Enter Doctors Name: ");
         String doctorName = scanner.nextLine();
 
-        System.out.print("Enter Doctors Age: ");
-        int doctorAge = scanner.nextInt();
-        scanner.nextLine();
+        int doctorAge;
+        while (true) {
+            System.out.print("Enter Doctor Age: ");
+            if (scanner.hasNextInt()) {
+                doctorAge = scanner.nextInt();
+                scanner.nextLine();
+                break;
+            } else {
+                System.out.println("ERROR: Invalid input, Please enter a number for Doctor Age.");
+                scanner.next();
+            }
+        }
 
         System.out.print("Enter Doctors Phone Number: ");
         String doctorPhoneNumber = scanner.nextLine();
@@ -102,5 +156,6 @@ public class MenuUtils {
 
 
         Doctor newDoctor = new Doctor(doctorID, doctorName, doctorAge, doctorPhoneNumber, Spec);
+        System.out.println("Entering Doctor: " + newDoctor + " With Specialization: " + newDoctor.getSpecialization());
     }
 }
