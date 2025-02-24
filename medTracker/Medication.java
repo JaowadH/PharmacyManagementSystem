@@ -14,7 +14,7 @@ public class Medication {
     private Date expiryDate;
 
     // Constructor
-    public Medication(int medID, String medName, String dose, int quantity, Date manufactureDate, Date expiryDate) {
+    public Medication(int medID, String medName, String dose, int quantity) {
         this.medID = medID;
         this.medName = medName;
         this.dose = dose;
