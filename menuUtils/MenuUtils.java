@@ -7,7 +7,7 @@ import java.util.Date;
 import medTracker.*;
 
 public class MenuUtils {
-    public static void addMed(List<Medication> medications, Scanner scanner) {
+    public static void addMed(MedicationTrackingSystem MTS, Scanner scanner) {
         // adding med id
         int medID;
         while (true) {
@@ -46,7 +46,7 @@ public class MenuUtils {
 
         // med object
         Medication newMed = new Medication(medID, medName, dose, quantity);
-        medications.add(newMed);
+        MTS.addMedication(newMed);
         System.out.println("New Medication added: " + newMed);
 
         }
@@ -79,7 +79,7 @@ public class MenuUtils {
         }
     }
 
-    public static void addPatient(List<Patient> patients, Scanner scanner) {
+    public static void addPatient(MedicationTrackingSystem MTS, Scanner scanner) {
         int patientID;
         while (true) {
             System.out.print("Enter Patient ID: ");
@@ -118,7 +118,7 @@ public class MenuUtils {
     }
 
 
-    public static void addDoctor(List<Doctor> doctors, Scanner scanner) {
+    public static void addDoctor(MedicationTrackingSystem MTS, Scanner scanner) {
         int doctorID;
         while (true) {
             System.out.print("Enter Doctors ID: ");

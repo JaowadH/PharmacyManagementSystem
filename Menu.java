@@ -1,17 +1,18 @@
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import medTracker.Doctor;
 import medTracker.Patient;
+import menuUtils.MedicationTrackingSystem;
 import menuUtils.MenuUtils;
 import medTracker.Medication;
 
 public class Menu {
         // lets scanner take input
         private static final Scanner scanner = new Scanner(System.in);
-        private static final ArrayList<Medication> medications = new ArrayList<>();
-        private static final ArrayList<Patient> patients = new ArrayList<>();
-        private static final ArrayList<Doctor> doctors = new ArrayList<>();
+        private static final List<Medication> medications = new ArrayList<>();
+        private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
     public static void main(String[] args) {
         // sets attributes for menu
         int choice;
@@ -45,13 +46,13 @@ public class Menu {
             // switch case for handling choice
             switch ( choice ) {
                 case 1:
-                    MenuUtils.addPatient(patients, scanner);
+                    MenuUtils.addPatient(MTS, scanner);
                     break;
                 case 2:
-                    MenuUtils.addDoctor(doctors, scanner);
+                    MenuUtils.addDoctor(MTS, scanner);
                     break;
                 case 3:
-                    MenuUtils.addMed(medications, scanner);
+                    MenuUtils.addMed(MTS, scanner);
                     break;
                 case 4:
                     MenuUtils.printSystemReport(medications);

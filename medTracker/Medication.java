@@ -10,8 +10,8 @@ public class Medication {
     private String medName;
     private String dose;
     private int quantity;
-    private Date manufactureDate;
-    private Date expiryDate;
+    private final Date manufactureDate;
+    private final Date expiryDate;
 
     // Constructor
     public Medication(int medID, String medName, String dose, int quantity) {
