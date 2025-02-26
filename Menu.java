@@ -4,21 +4,20 @@ import java.util.Scanner;
 
 import medTracker.Doctor;
 import medTracker.Patient;
+import medTracker.Medication;
 import menuUtils.MedicationTrackingSystem;
 import menuUtils.MenuUtils;
-import medTracker.Medication;
 
 public class Menu {
-        // lets scanner take input
-        private static final Scanner scanner = new Scanner(System.in);
-        private static final List<Medication> medications = new ArrayList<>();
-        private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
+    // Lets scanner take input
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final List<Medication> medications = new ArrayList<>();
+    private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
+
     public static void main(String[] args) {
-        // sets attributes for menu
         int choice;
 
         do {
-            // build menu in sout
             System.out.println("\nWelcome to the Med Tracker");
             System.out.println("What would you like to do?");
             System.out.println("1. Add a New Patient");
@@ -32,7 +31,6 @@ public class Menu {
             System.out.println("9. Print all Scripts for specified Patient");
             System.out.println("10. Exit");
             System.out.print("Enter your choice: ");
-            // input must be integer
 
             while (!scanner.hasNextInt()) {
                 System.out.println("ERROR: Invalid input, Please enter a number between 1 and 10.");
@@ -40,11 +38,9 @@ public class Menu {
                 scanner.next();
             }
             choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consume newline character
 
-
-            // switch case for handling choice
-            switch ( choice ) {
+            switch (choice) {
                 case 1:
                     MenuUtils.addPatient(MTS, scanner);
                     break;
@@ -55,46 +51,68 @@ public class Menu {
                     MenuUtils.addMed(MTS, scanner);
                     break;
                 case 4:
-                    MenuUtils.printSystemReport(medications);
+                    MTS.generateReport();
                     break;
                 case 5:
-                    MenuUtils.checkExpiredMeds(medications);
+                    MTS.checkExpiredMedications();
                     break;
                 case 6:
-                    System.out.print("Enter Patients name for prescription: ");
+                    System.out.print("Enter Patient's name for prescription: ");
                     String prescriptPatient = scanner.nextLine();
+                    System.out.print("Enter Doctor's name issuing the prescription: ");
+                    String prescriptDoctor = scanner.nextLine();
                     System.out.print("Enter Medication Name: ");
                     String prescriptMed = scanner.nextLine();
-                    System.out.println("Processing prescription for " + prescriptPatient + ", With Drug: " + prescriptMed + "...");
-                    // add logic for function here from module packages
+
+                    Patient patient = MTS.findPatient(prescriptPatient);
+                    Doctor doctor = MTS.findDoctor(prescriptDoctor);
+                    Medication medication = MTS.findMedication(prescriptMed);
+
+                    if (patient != null && doctor != null && medication != null) {
+                        System.out.print("Enter Dosage: ");
+                        int dosage = scanner.nextInt();
+                        System.out.print("Enter Duration (days): ");
+                        int duration = scanner.nextInt();
+                        scanner.nextLine(); // Consume newline
+
+                        MTS.acceptPrescription(patient.getId(), doctor, patient, medication, new java.util.Date());
+                        System.out.println("Prescription added successfully.");
+                    } else {
+                        System.out.println("Invalid input. Please check if the patient, doctor, or medication exists.");
+                    }
                     break;
                 case 7:
-                    System.out.print("Enter medTracker.Doctor's name to view prescriptions: ");
+                    System.out.print("Enter Doctor's name to view prescriptions: ");
                     String scriptDoc = scanner.nextLine();
-                    System.out.println("Fetching prescriptions for Dr. " + scriptDoc + "...");
-                    // add logic for function here from module packages
+                    MTS.printDoctorPrescriptions(scriptDoc);
                     break;
                 case 8:
-                    System.out.println("Restocking the drugs in Pharmacy...");
-                    // add logic for function here from module packages
+                    System.out.print("Enter Medication Name to restock: ");
+                    String restockMed = scanner.nextLine();
+                    System.out.print("Enter quantity to restock: ");
+
+                    while (!scanner.hasNextInt()) {
+                        System.out.println("Invalid input. Please enter a valid number.");
+                        scanner.next();
+                    }
+                    int quantity = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+
+                    MTS.restockMedication(restockMed);
                     break;
                 case 9:
-                    System.out.print("Enter patients name to view prescriptions: ");
+                    System.out.print("Enter Patient's name to view prescriptions: ");
                     String scriptPatient = scanner.nextLine();
-                    System.out.println("Fetching prescriptions for " + scriptPatient + "...");
-                    // add logic for function here from module packages
+                    MTS.printPatientPrescriptions(scriptPatient);
                     break;
                 case 10:
                     System.out.println("Exiting system, Have a good day!");
-                    // add logic for function here from module packages
                     break;
-
-                    // remove default for prod
                 default:
                     System.out.println("ERROR: Invalid input, Please enter a number between 1 and 10.");
             }
-        } while ( choice != 10);
+        } while (choice != 10);
+
         scanner.close();
     }
 }
-

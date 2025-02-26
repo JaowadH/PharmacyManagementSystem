@@ -102,6 +102,23 @@ public class MedicationTrackingSystem {
             System.out.println("Doctor not found.");
         }
     }
+    public void printPatientPrescriptions(String patientName) {
+        Patient patient = findPatient(patientName);
+        if (patient != null) {
+            System.out.println("Prescriptions for " + patientName + ":");
+            List<Prescription> patientPrescriptions = patient.getPrescriptions();
+            if (patientPrescriptions.isEmpty()) {
+                System.out.println("No prescriptions found for this patient.");
+            } else {
+                for (Prescription p : patientPrescriptions) {
+                    System.out.println(p);
+                }
+            }
+        } else {
+            System.out.println("Patient not found.");
+        }
+    }
+
 
     public void restockMedication(String medName) {
         Scanner scanner = new Scanner(System.in);
@@ -144,15 +161,15 @@ public class MedicationTrackingSystem {
         }
     }
 
-    private Patient findPatient(String name) {
+    public Patient findPatient(String name) {
         return patients.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    private Doctor findDoctor(String name) {
+    public Doctor findDoctor(String name) {
         return doctors.stream().filter(d -> d.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 
-    private Medication findMedication(String name) {
+    public Medication findMedication(String name) {
         return medications.stream().filter(m -> m.getMedName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 }
