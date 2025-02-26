@@ -3,8 +3,6 @@ package menuUtils;
 import java.util.*;
 import medTracker.*;
 
-import javax.print.Doc;
-
 public class MedicationTrackingSystem {
     private final List<Patient> patients;
     private final List<Doctor> doctors;
@@ -27,10 +25,6 @@ public class MedicationTrackingSystem {
         }
     }
 
-    public List<Patient> getPatients() {
-        return patients;
-    }
-
     public void addDoctor(Doctor newDoctor) {
         if (!doctors.contains(newDoctor)) {
             doctors.add(newDoctor);
@@ -48,32 +42,87 @@ public class MedicationTrackingSystem {
             System.out.println("Medication already exists.");
         }
     }
-    
 
-    private Patient findPatient(String name) {
-        for (Patient p : patients) {
-            if (p.getName().equalsIgnoreCase(name)) return p;
+    public void addPatientToDoctor(String patientName, String doctorName) {
+        Patient patient = findPatient(patientName);
+        Doctor doctor = findDoctor(doctorName);
+        if (patient != null && doctor != null) {
+            doctor.addPatient(patient);
+            System.out.println("Patient added to doctor's list.");
+        } else {
+            System.out.println("Doctor or patient not found.");
         }
-        return null;
     }
 
-    private Doctor findDoctor(String name) {
-        for (Doctor d : doctors) {
-            if (d.getName().equalsIgnoreCase(name)) return d;
+    public void acceptPrescription(int prescriptionId, Doctor doctor, Patient patient, Medication medication, Date issueDate) {
+        if (patient != null && doctor != null && medication != null) {
+            Prescription prescription = new Prescription(prescriptionId, doctor, patient, medication, issueDate);
+            prescriptions.add(prescription);
+            System.out.println("Prescription added successfully for " + patient.getName() + ".");
+        } else {
+            System.out.println("Invalid prescription data. Please check patient, doctor, or medication details.");
         }
-        return null;
     }
 
-    private Medication findMedication(String name) {
-        for (Medication m : medications) {
-            if (m.getMedName().equalsIgnoreCase(name)) return m;
+    public void editMedication(String oldName, String newName) {
+        Medication med = findMedication(oldName);
+        if (med != null) {
+            med.setMedName(newName);
+            System.out.println("Medication updated.");
+        } else {
+            System.out.println("Medication not found.");
         }
-        return null;
     }
 
+    public void deletePatient(String name) {
+        patients.removeIf(p -> p.getName().equalsIgnoreCase(name));
+        System.out.println("Patient deleted successfully.");
+    }
+
+    public void deleteDoctor(String name) {
+        doctors.removeIf(d -> d.getName().equalsIgnoreCase(name));
+        System.out.println("Doctor deleted successfully.");
+    }
+
+    public void deleteMedication(String name) {
+        medications.removeIf(m -> m.getMedName().equalsIgnoreCase(name));
+        System.out.println("Medication deleted successfully.");
+    }
+
+    public void printDoctorPrescriptions(String doctorName) {
+        Doctor doctor = findDoctor(doctorName);
+        if (doctor != null) {
+            System.out.println("Prescriptions issued by Dr. " + doctorName + ":");
+            for (Prescription p : prescriptions) {
+                if (p.getDoctor().equals(doctor)) {
+                    System.out.println(p);
+                }
+            }
+        } else {
+            System.out.println("Doctor not found.");
+        }
+    }
+
+    public void restockMedication(String medName) {
+        Scanner scanner = new Scanner(System.in);
+        Medication med = findMedication(medName);
+        if (med != null) {
+            System.out.print("Enter quantity to restock: ");
+            while (!scanner.hasNextInt()) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next();
+            }
+            int quantity = scanner.nextInt();
+            scanner.nextLine(); // Consume newline character
+            med.restock(quantity);
+            System.out.println("Medication restocked by " + quantity + " units.");
+        } else {
+            System.out.println("Medication not found.");
+        }
+    }
 
     public void generateReport() {
-        System.out.println("\n--- Pharmacy Management System Report ---");
+        System.out.println("\n--- Medication Tracking System Report ---");
         System.out.println("Patients: " + patients.size());
         System.out.println("Doctors: " + doctors.size());
         System.out.println("Medications: " + medications.size());
@@ -83,16 +132,27 @@ public class MedicationTrackingSystem {
     public void checkExpiredMedications() {
         System.out.println("Checking for expired medications...");
         Date currDate = new Date();
-        boolean hasExpired = false;
-
+        boolean foundExpired = false;
         for (Medication med : medications) {
             if (med.getExpiryDate().compareTo(currDate) < 0) {
                 System.out.println("Expired: " + med.getMedName());
-                hasExpired = true;
+                foundExpired = true;
             }
         }
-        if (!hasExpired) {
-            System.out.println("No expired medications.");
+        if (!foundExpired) {
+            System.out.println("No expired medications found.");
         }
+    }
+
+    private Patient findPatient(String name) {
+        return patients.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
+    private Doctor findDoctor(String name) {
+        return doctors.stream().filter(d -> d.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+
+    private Medication findMedication(String name) {
+        return medications.stream().filter(m -> m.getMedName().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
 }
