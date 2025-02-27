@@ -131,18 +131,17 @@ public class MenuUtils {
 
     public static void savePatientToJson(List<Patient> patients, String filePath) {
         JSONArray jsonArray = new JSONArray();
-        try (FileWriter fileWriter = new FileWriter(filePath, true)) { // Append mode
-            for (Patient patient : patients) {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id", patient.getId());
-                jsonObject.put("name", patient.getName());
-                jsonObject.put("age", patient.getAge());
-                jsonObject.put("phoneNumber", patient.getPhoneNumber());
+        for (Patient patient : patients) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", patient.getId());
+            jsonObject.put("name", patient.getName());
+            jsonObject.put("age", patient.getAge());
+            jsonObject.put("phoneNumber", patient.getPhoneNumber());
 
-                jsonArray.add(jsonObject);
-
-                fileWriter.write(jsonArray.toJSONString() + System.lineSeparator());
-            }
+            jsonArray.add(jsonObject);
+        }
+        try (FileWriter fileWriter = new FileWriter(filePath)) { // Append mode
+                fileWriter.write(jsonArray.toJSONString());
         } catch (IOException e) {
             e.printStackTrace();
         }

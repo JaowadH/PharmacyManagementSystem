@@ -3,6 +3,8 @@ package src.main.java.menuUtils;
 import java.util.*;
 import src.main.java.medTracker.*;
 
+import static src.main.java.menuUtils.MenuUtils.readPatientsFromJson;
+
 public class MedicationTrackingSystem {
     private final List<Patient> patients;
     private final List<Doctor> doctors;
@@ -141,11 +143,11 @@ public class MedicationTrackingSystem {
     }
 
     public void generateReport() {
-        System.out.println("\n--- Medication Tracking System Report ---");
-        System.out.println("Patients: " + patients.size());
-        System.out.println("Doctors: " + doctors.size());
-        System.out.println("Medications: " + medications.size());
-        System.out.println("Prescriptions: " + prescriptions.size());
+        String filePath = "src/main/java/medTracker/patients.json";
+        List<Patient> loadedPatients = readPatientsFromJson(filePath);
+        for (Patient patient : loadedPatients) {
+            System.out.println(patient);
+        }
     }
 
     public void checkExpiredMedications() {
