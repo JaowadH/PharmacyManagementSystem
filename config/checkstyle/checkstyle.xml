@@ -9,15 +9,8 @@
         <property name="allowLegacy" value="true"/>
     </module>
 
-    <module name="TreeWalker">
-        <!-- Allow missing Javadoc comments -->
-        <module name="JavadocMethod">
-            <property name="allowMissingParamTags" value="true"/>
-            <property name="allowMissingReturnTag" value="true"/>
-        </module>
-
         <module name="JavadocVariable">
-            <property name="scope" value="private"/>
+            <property name="scope" value="protected"/>
         </module>
 
         <!-- Remove 80-character line limit -->
@@ -26,7 +19,7 @@
         </module>
 
         <!-- Allow trailing spaces (optional) -->
-        <module name="RegexpSingleline">
+        <module name="RegexpSingleLine">
             <property name="format" value="\s+$"/>
             <property name="ignoreWhitespace" value="true"/>
         </module>
@@ -39,4 +32,3 @@
         <!-- Require final parameters (but can be disabled if unwanted) -->
         <module name="FinalParameters"/>
     </module>
-</module>
