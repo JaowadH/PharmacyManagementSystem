@@ -29,18 +29,6 @@ public class Person {
     public String getPhoneNumber() {
         return phoneNumber; }
 
-    public void setName(String name) {
-         this.name = name; 
-    }
-
-    public void setAge(int age) {
-         this.age = age; 
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-         this.phoneNumber = phoneNumber; 
-    }
-
     @Override
     public String toString() {
         return String.format("Person Id: %d%n Person name: %s%n Person age: %d%n Person phone number: %s%n",

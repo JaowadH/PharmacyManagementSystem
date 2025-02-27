@@ -1,13 +1,22 @@
 package src.main.java.menuUtils;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Date;
+
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import src.main.java.medTracker.*;
+
+import static src.main.java.medTracker.Patient.fromJson;
 
 public class MenuUtils {
     public static void addMed(MedicationTrackingSystem MTS, Scanner scanner) {
@@ -82,7 +91,7 @@ public class MenuUtils {
         }
     }
 
-    public static void addPatient(MedicationTrackingSystem MTS, Scanner scanner) {
+    public Patient addPatient(Scanner scanner) {
         int patientID;
         while (true) {
             System.out.print("Enter Patient ID: ");
@@ -116,12 +125,12 @@ public class MenuUtils {
         String patientPhoneNumber = scanner.nextLine();
 
         // patient object
-        Patient newPatient = new Patient(patientID, patientName, patientAge, patientPhoneNumber);
-        System.out.println("New Patient added: " + newPatient);
+
+        return new Patient(patientID, patientName, patientAge, patientPhoneNumber);
     }
 
     public static void savePatientToJson(List<Patient> patients, String filePath) {
-
+        JSONArray jsonArray = new JSONArray();
         try (FileWriter fileWriter = new FileWriter(filePath, true)) { // Append mode
             for (Patient patient : patients) {
                 JSONObject jsonObject = new JSONObject();
@@ -130,12 +139,31 @@ public class MenuUtils {
                 jsonObject.put("age", patient.getAge());
                 jsonObject.put("phoneNumber", patient.getPhoneNumber());
 
-                fileWriter.write(jsonObject.toJSONString() + System.lineSeparator());
+                jsonArray.add(jsonObject);
+
+                fileWriter.write(jsonArray.toJSONString() + System.lineSeparator());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static List<Patient> readPatientsFromJson(String filePath) {
+        List<Patient> patients = new ArrayList<>();
+        try (FileReader fileReader = new FileReader(filePath)) {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader); // Parse the file into a JSONArray
+
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+                patients.add(fromJson(jsonObject)); // Convert JSON object to Patient and add to the list
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return patients;
+    }
+
 
     public static void addDoctor(MedicationTrackingSystem MTS, Scanner scanner) {
         int doctorID;

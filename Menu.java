@@ -11,8 +11,8 @@ public class Menu {
     private static final List<Medication> medications = new ArrayList<>();
     private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
     private static final List<Patient> patients = new ArrayList<>();
-
     public static void main(String[] args) {
+    MenuUtils menu = new MenuUtils();
 
         String filePath = "src/main/java/medTracker/patients.json";
         int choice;
@@ -42,9 +42,10 @@ public class Menu {
 
             switch (choice) {
                 case 1:
-                    patients.add(new Patient(1, "John Doe", 30, "123-456-7890"));
-                    patients.add(new Patient(2, "Jane Smith", 25, "987-654-3210"));
-                    MenuUtils.addPatient(MTS, scanner);
+                    Patient newPatient = menu.addPatient(scanner);
+                    if (newPatient != null) {
+                        patients.add(newPatient);
+                    }
                     MenuUtils.savePatientToJson(patients, filePath);
                     break;
                 case 2:
