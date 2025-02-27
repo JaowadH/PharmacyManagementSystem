@@ -5,11 +5,11 @@
 
 <module name="Checker">
     <!-- Suppress warnings about missing `package-info.java` -->
-    <module name="TreeWalker">
-        <module name="JavadocPackage">
-            <property name="allowLegacy" value="true"/>
-        </module>
+    <module name="JavadocPackage">
+        <property name="allowLegacy" value="true"/>
+    </module>
 
+    <module name="TreeWalker">
         <!-- Allow missing Javadoc comments -->
         <module name="JavadocMethod">
             <property name="allowMissingParamTags" value="true"/>
