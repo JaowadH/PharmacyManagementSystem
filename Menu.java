@@ -11,10 +11,10 @@ public class Menu {
     private static final List<Medication> medications = new ArrayList<>();
     private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
     private static final List<Patient> patients = new ArrayList<>();
+    private static final List<Doctor> doctors = new ArrayList<>();
     public static void main(String[] args) {
     MenuUtils menu = new MenuUtils();
 
-        String filePath = "src/main/java/medTracker/patients.json";
         int choice;
 
         do {
@@ -42,14 +42,20 @@ public class Menu {
 
             switch (choice) {
                 case 1:
+                    String patientPath = "src/main/java/medTracker/patients.json";
                     Patient newPatient = menu.addPatient(scanner);
                     if (newPatient != null) {
                         patients.add(newPatient);
                     }
-                    MenuUtils.savePatientToJson(patients, filePath);
+                    MenuUtils.savePatientToJson(patients, patientPath);
                     break;
                 case 2:
-                    MenuUtils.addDoctor(MTS, scanner);
+                    String doctorPath = "src/main/java/medTracker/doctors.json";
+                    Doctor newDoctor = menu.addDoctor(scanner);
+                    if (newDoctor != null) {
+                        doctors.add(newDoctor);
+                    }
+                    MenuUtils.saveDoctorToJson(doctors, doctorPath);
                     break;
                 case 3:
                     MenuUtils.addMed(MTS, scanner);

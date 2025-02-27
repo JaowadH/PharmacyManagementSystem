@@ -1,7 +1,11 @@
 package src.main.java.medTracker;
 
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
+
+
 /**
 * Represents a Doctor.
 * */
@@ -71,7 +75,39 @@ public class Doctor extends Person {
         this.specialization = specialization;
     }
 
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", getId());
+        jsonObject.put("name", getName());
+        jsonObject.put("age", getAge());
+        jsonObject.put("phoneNumber", getPhoneNumber());
+        jsonObject.put("specialization", getSpecialization());
+        return jsonObject;
+    }
 
+    public static Doctor fromDoctorJson(JSONObject jsonObject) {
+        int id = getIntValue(jsonObject.get("id"));
+        String name = (String) jsonObject.get("name");
+        int age = getIntValue(jsonObject.get("age"));
+        String phoneNumber = (String) jsonObject.get("phoneNumber");
+        String Spec = (String) jsonObject.get("Specialization");
+
+        return new Doctor(id
+                , name
+                , age
+                , phoneNumber
+                , Spec);
+    }
+
+    private static int getIntValue(Object value) {
+        if (value instanceof Long) {
+            return ((Long) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            throw new IllegalArgumentException("Invalid type for integer value: " + value.getClass());
+        }
+    }
     /**
      * Returns a string representation of the Doctor object.
      * The string includes the doctor's

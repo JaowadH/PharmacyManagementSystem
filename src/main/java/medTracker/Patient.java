@@ -6,10 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Patient extends Person {
-    private List<Medication> medications;
-    private List<Prescription> prescriptions;
+    private final List<Medication> medications;
+    private final List<Prescription> prescriptions;
 
     public Patient(int id, String name, int age, String phoneNumber) {
+        super(id, name, age, phoneNumber);
+        this.medications = new ArrayList<>();
+        this.prescriptions = new ArrayList<>();
+    }
+
+    // New constructor that accepts additional parameters
+    public Patient(int id, String name, int age, String phoneNumber, int medications, int prescriptions) {
         super(id, name, age, phoneNumber);
         this.medications = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
@@ -39,10 +46,12 @@ public class Patient extends Person {
         jsonObject.put("name", getName());
         jsonObject.put("age", getAge());
         jsonObject.put("phoneNumber", getPhoneNumber());
+        jsonObject.put("medications", getMedications());
+        jsonObject.put("prescriptions", getPrescriptions());
         return jsonObject;
     }
 
-    public static Patient fromJson(JSONObject jsonObject) {
+    public static Patient fromPatientJson(JSONObject jsonObject) {
         int id = getIntValue(jsonObject.get("id"));
         String name = (String) jsonObject.get("name");
         int age = getIntValue(jsonObject.get("age"));
@@ -56,11 +65,8 @@ public class Patient extends Person {
     private static int getIntValue(Object value) {
         if (value instanceof Long) {
             return ((Long) value).intValue();
-        } else if (value instanceof Integer) {
-            return (Integer) value;
-        } else {
-            throw new IllegalArgumentException("Invalid type for integer value: " + value.getClass());
         }
+        return (Integer) value;
     }
     @Override
     public String toString() {

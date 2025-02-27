@@ -1,10 +1,10 @@
 package src.main.java.medTracker;
 
 public class Person {
-    private int id;
-    private String name;
-    private int age;
-    private String phoneNumber;
+    private final int id;
+    private final String name;
+    private final int age;
+    private final String phoneNumber;
 
     public Person(int id, String name, int age, String phoneNumber) {
         this.id = id;

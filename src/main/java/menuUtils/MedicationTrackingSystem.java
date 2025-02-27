@@ -3,6 +3,7 @@ package src.main.java.menuUtils;
 import java.util.*;
 import src.main.java.medTracker.*;
 
+import static src.main.java.menuUtils.MenuUtils.readDoctorsFromJson;
 import static src.main.java.menuUtils.MenuUtils.readPatientsFromJson;
 
 public class MedicationTrackingSystem {
@@ -10,7 +11,6 @@ public class MedicationTrackingSystem {
     private final List<Doctor> doctors;
     private final List<Medication> medications;
     private final List<Prescription> prescriptions;
-    private static final String FILE_PATH = "MTS_data.json";
 
     public MedicationTrackingSystem() {
         this.patients = new ArrayList<>();
@@ -18,24 +18,6 @@ public class MedicationTrackingSystem {
         this.medications = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
 
-    }
-
-    public void addPatient(Patient newPatient) {
-        if (!patients.contains(newPatient)) {
-            patients.add(newPatient);
-            System.out.println("Patient added successfully.");
-        } else {
-            System.out.println("Patient already exists.");
-        }
-    }
-
-    public void addDoctor(Doctor newDoctor) {
-        if (!doctors.contains(newDoctor)) {
-            doctors.add(newDoctor);
-            System.out.println("Doctor added successfully.");
-        } else {
-            System.out.println("Doctor already exists.");
-        }
     }
 
     public void addMedication(Medication newMed) {
@@ -143,10 +125,15 @@ public class MedicationTrackingSystem {
     }
 
     public void generateReport() {
-        String filePath = "src/main/java/medTracker/patients.json";
-        List<Patient> loadedPatients = readPatientsFromJson(filePath);
+        String patientPath = "src/main/java/medTracker/patients.json";
+        String DoctorPath = "src/main/java/medTracker/doctors.json";
+        List<Patient> loadedPatients = readPatientsFromJson(patientPath);
+        List<Doctor> loadedDoctors = readDoctorsFromJson(DoctorPath);
         for (Patient patient : loadedPatients) {
             System.out.println(patient);
+        }
+        for (Doctor doctor : loadedDoctors) {
+            System.out.println(doctor);
         }
     }
 
