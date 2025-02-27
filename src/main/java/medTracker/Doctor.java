@@ -82,13 +82,12 @@ public class Doctor extends Person {
      */
     @Override
     public String toString() {
-        return String.format(
-            "Doctor ID: %d%n" +
-            "Doctor Name: %s%n" +
-            "Doctor Age: %d%n" +
-            "Doctor Phone Number: %s%n" +
-            "Specialization: %s%n" +
-            "Number of Patients: %d%n",
+        return String.format("Doctor ID: %d%n"
+                        +"Doctor Name: %s%n"
+                        +"Doctor Age: %d%n"
+                        +"Doctor Phone Number: %s%n"
+                        +"Specialization: %s%n"
+                        +"Number of Patients: %d%n",
                 getId()
                 ,getName()
                 ,getAge()
