@@ -2,19 +2,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import medTracker.Doctor;
-import medTracker.Patient;
-import medTracker.Medication;
-import menuUtils.MedicationTrackingSystem;
-import menuUtils.MenuUtils;
+import src.main.java.medTracker.*;
+import src.main.java.menuUtils.*;
 
 public class Menu {
     // Lets scanner take input
     private static final Scanner scanner = new Scanner(System.in);
     private static final List<Medication> medications = new ArrayList<>();
     private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
+    private static final List<Patient> patients = new ArrayList<>();
 
     public static void main(String[] args) {
+
+        String filePath = "src/main/java/medTracker/patients.json";
         int choice;
 
         do {
@@ -42,7 +42,10 @@ public class Menu {
 
             switch (choice) {
                 case 1:
+                    patients.add(new Patient(1, "John Doe", 30, "123-456-7890"));
+                    patients.add(new Patient(2, "Jane Smith", 25, "987-654-3210"));
                     MenuUtils.addPatient(MTS, scanner);
+                    MenuUtils.savePatientToJson(patients, filePath);
                     break;
                 case 2:
                     MenuUtils.addDoctor(MTS, scanner);
@@ -57,53 +60,16 @@ public class Menu {
                     MTS.checkExpiredMedications();
                     break;
                 case 6:
-                    System.out.print("Enter Patient's name for prescription: ");
-                    String prescriptPatient = scanner.nextLine();
-                    System.out.print("Enter Doctor's name issuing the prescription: ");
-                    String prescriptDoctor = scanner.nextLine();
-                    System.out.print("Enter Medication Name: ");
-                    String prescriptMed = scanner.nextLine();
-
-                    Patient patient = MTS.findPatient(prescriptPatient);
-                    Doctor doctor = MTS.findDoctor(prescriptDoctor);
-                    Medication medication = MTS.findMedication(prescriptMed);
-
-                    if (patient != null && doctor != null && medication != null) {
-                        System.out.print("Enter Dosage: ");
-                        int dosage = scanner.nextInt();
-                        System.out.print("Enter Duration (days): ");
-                        int duration = scanner.nextInt();
-                        scanner.nextLine(); // Consume newline
-
-                        MTS.acceptPrescription(patient.getId(), doctor, patient, medication, new java.util.Date());
-                        System.out.println("Prescription added successfully.");
-                    } else {
-                        System.out.println("Invalid input. Please check if the patient, doctor, or medication exists.");
-                    }
+                    MenuUtils.handlePrescription(MTS, scanner);
                     break;
                 case 7:
-                    System.out.print("Enter Doctor's name to view prescriptions: ");
-                    String scriptDoc = scanner.nextLine();
-                    MTS.printDoctorPrescriptions(scriptDoc);
+                    MenuUtils.docScript(MTS, scanner);
                     break;
                 case 8:
-                    System.out.print("Enter Medication Name to restock: ");
-                    String restockMed = scanner.nextLine();
-                    System.out.print("Enter quantity to restock: ");
-
-                    while (!scanner.hasNextInt()) {
-                        System.out.println("Invalid input. Please enter a valid number.");
-                        scanner.next();
-                    }
-                    int quantity = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
-
-                    MTS.restockMedication(restockMed);
+                    MenuUtils.restockMedication(MTS, scanner);
                     break;
                 case 9:
-                    System.out.print("Enter Patient's name to view prescriptions: ");
-                    String scriptPatient = scanner.nextLine();
-                    MTS.printPatientPrescriptions(scriptPatient);
+                    MenuUtils.printPatientPrescriptions(MTS, scanner);
                     break;
                 case 10:
                     System.out.println("Exiting system, Have a good day!");
