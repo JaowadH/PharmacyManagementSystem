@@ -10,7 +10,7 @@
     </module>
 
         <module name="JavadocVariable">
-            <property name="scope" value="protected"/>
+            <property name="scope" value="private"/>
         </module>
 
         <!-- Remove 80-character line limit -->
