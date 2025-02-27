@@ -33,7 +33,12 @@ public class Patient extends Person {
 
     @Override
     public String toString() {
-        return String.format("Patient ID: %d%n Patient name: %s%n, Patient age: %d%n Patient phone number: %s%n Patient medication: %d%n Patient prescription: %d%n ",
-        getId(), getName(), getAge(), getPhoneNumber(), medications.size(), prescriptions.size() );
+        return String.format("Patient ID: %d%n " +
+                        "Patient name: %s%n " +
+                        "Patient age: %d%n " +
+                        "Patient phone number: %s%n " +
+                        "Patient medication: %d%n " +
+                        "Patient prescription: %d%n "
+        ,getId(), getName(), getAge(), getPhoneNumber(), medications.size(), prescriptions.size() );
     }
 }

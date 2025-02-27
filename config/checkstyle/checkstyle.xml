@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+    <!-- Suppress warnings about missing `package-info.java` -->
+    <module name="TreeWalker">
+        <module name="JavadocPackage">
+            <property name="allowLegacy" value="true"/>
+        </module>
+
+        <!-- Allow missing Javadoc comments -->
+        <module name="JavadocMethod">
+            <property name="allowMissingParamTags" value="true"/>
+            <property name="allowMissingReturnTag" value="true"/>
+        </module>
+
+        <module name="JavadocVariable">
+            <property name="scope" value="private"/>
+        </module>
+
+        <!-- Remove 80-character line limit -->
+        <module name="LineLength">
+            <property name="max" value="0"/>  <!-- No line length restriction -->
+        </module>
+
+        <!-- Allow trailing spaces (optional) -->
+        <module name="RegexpSingleline">
+            <property name="format" value="\s+$"/>
+            <property name="ignoreWhitespace" value="true"/>
+        </module>
+
+        <!-- Optional: Make classes final if they are not designed for extension -->
+        <module name="DesignForExtension">
+            <property name="validateOnlyOverriddenMethods" value="true"/>
+        </module>
+
+        <!-- Require final parameters (but can be disabled if unwanted) -->
+        <module name="FinalParameters"/>
+    </module>
+</module>

@@ -12,7 +12,8 @@ public class Prescription {
     private Date prescriptionExpiry;
 
     // constructor
-    public Prescription(int prescriptionID, Doctor doctor, Patient patient, Medication medication, Date prescriptionExpiry) {
+    public Prescription(int prescriptionID, Doctor doctor, Patient patient, Medication medication,
+                        Date prescriptionExpiry) {
         this.prescriptionID = prescriptionID;
         this.doctor = doctor;
         this.patient = patient;
