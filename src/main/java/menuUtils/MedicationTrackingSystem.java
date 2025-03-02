@@ -13,7 +13,7 @@ import static menuUtils.MenuUtils.readPatientsFromJson;
 public class MedicationTrackingSystem {
     private final List<Patient> patients;
     private final List<Doctor> doctors;
-    private final List<Medication> medications;
+    private static List<Medication> medications = List.of();
     private final List<Prescription> prescriptions;
 
     /**
@@ -24,7 +24,7 @@ public class MedicationTrackingSystem {
     public MedicationTrackingSystem() {
         this.patients = new ArrayList<>();
         this.doctors = new ArrayList<>();
-        this.medications = new ArrayList<>();
+        medications = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
     }
 
@@ -90,7 +90,7 @@ public class MedicationTrackingSystem {
      * @return The patient object if found, otherwise null.
      */
 
-    private Patient findPatient(String name) {
+    Patient findPatient(String name) {
         for (Patient p : patients) {
             if (p.getName().equalsIgnoreCase(name)) return p;
         }
@@ -104,7 +104,7 @@ public class MedicationTrackingSystem {
      * @return The doctor object if found, otherwise null.
      */
 
-    private Doctor findDoctor(String name) {
+    Doctor findDoctor(String name) {
         for (Doctor d : doctors) {
             if (d.getName().equalsIgnoreCase(name)) return d;
         }
@@ -114,15 +114,13 @@ public class MedicationTrackingSystem {
     /**
      * Finds a medication by name.
      *
-     * @param name The name of the medication to find.
-     * @return The medication object if found, otherwise null.
+     *
      */
 
-    private Medication findMedication(String name) {
+    public static void findMedication(Scanner scanner) {
         for (Medication m : medications) {
-            if (m.getMedName().equalsIgnoreCase(name)) return m;
+            if (m.getMedName().equalsIgnoreCase(scanner.nextLine())) return;
         }
-        return null;
     }
 
     /**

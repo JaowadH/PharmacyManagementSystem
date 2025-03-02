@@ -45,18 +45,14 @@ public class Menu {
             switch ( choice ) {
                 case 1:
                     String patientPath = "src/main/java/medTracker/patients.json";
-                    Patient newPatient = menu.addPatient(scanner);
-                    if (newPatient != null) {
-                        patients.add(newPatient);
-                    }
+                    Patient newPatient = menuUtils.MenuUtils.addPatient(scanner);
+                    patients.add(newPatient);
                     MenuUtils.savePatientToJson(patients, patientPath);
                     break;
                 case 2:
                     String doctorPath = "src/main/java/medTracker/doctors.json";
-                    Doctor newDoctor = menu.addDoctor(scanner);
-                    if (newDoctor != null) {
-                        doctors.add(newDoctor);
-                    }
+                    Doctor newDoctor = menuUtils.MenuUtils.addDoctor(scanner);
+                    doctors.add(newDoctor);
                     MenuUtils.saveDoctorToJson(doctors, doctorPath);
                     break;
                 case 3:
@@ -69,16 +65,16 @@ public class Menu {
                     MTS.checkExpiredMedications();
                     break;
                 case 6:
-                    MenuUtils.handlePrescription(MTS, scanner);
+                    // logic not added
                     break;
                 case 7:
-                    MenuUtils.docScript(MTS, scanner);
+                    // logic not added
                     break;
                 case 8:
-                    MenuUtils.restockMedication(MTS, scanner);
+                    // logic not added
                     break;
                 case 9:
-                    MenuUtils.printPatientPrescriptions(MTS, scanner);
+                    menuUtils.MedicationTrackingSystem.findMedication(scanner);
                     break;
                 case 10:
                     System.out.println("Exiting system, Have a good day!");

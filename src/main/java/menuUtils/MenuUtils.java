@@ -116,14 +116,8 @@ public class MenuUtils {
         }
     }
 
-    /**
-     * Prompts the user to add a new patient to the MedicationTrackingSystem.
-     *
-     * @param MTS     The MedicationTrackingSystem instance to which the patient will be added.
-     * @param scanner The Scanner instance for user input.
-     */
 
-    public static void addPatient(MedicationTrackingSystem MTS, Scanner scanner) {
+    public static Patient addPatient(Scanner scanner) {
         int patientID;
         while (true) {
             System.out.print("Enter Patient ID: ");
@@ -196,7 +190,7 @@ public class MenuUtils {
     }
 
 
-    public Doctor addDoctor(Scanner scanner) {
+    public static Doctor addDoctor(Scanner scanner) {
         int doctorID;
         while (true) {
             System.out.print("Enter Doctors ID: ");
@@ -270,57 +264,4 @@ public class MenuUtils {
         }
         return doctors;
     }
-
-    public static void handlePrescription(MedicationTrackingSystem MTS, Scanner scanner) {
-        System.out.print("Enter Patient's name for prescription: ");
-        String prescriptPatient = scanner.nextLine();
-        System.out.print("Enter Doctor's name issuing the prescription: ");
-        String prescriptDoctor = scanner.nextLine();
-        System.out.print("Enter Medication Name: ");
-        String prescriptMed = scanner.nextLine();
-
-        Patient patient = MTS.findPatient(prescriptPatient);
-        Doctor doctor = MTS.findDoctor(prescriptDoctor);
-        Medication medication = MTS.findMedication(prescriptMed);
-
-        if (patient != null && doctor != null && medication != null) {
-            System.out.print("Enter Dosage: ");
-            int dosage = scanner.nextInt();
-            System.out.print("Enter Duration (days): ");
-            int duration = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            MTS.acceptPrescription(patient.getId(), doctor, patient, medication, new java.util.Date());
-            System.out.println("Prescription added successfully.");
-        } else {
-            System.out.println("Invalid input. Please check if the patient, doctor, or medication exists.");
-        }
-    }
-    public static void docScript(MedicationTrackingSystem MTS, Scanner scanner) {
-        System.out.print("Enter Doctor's name to view prescriptions: ");
-        String scriptDoc = scanner.nextLine();
-        MTS.printDoctorPrescriptions(scriptDoc);
-    }
-
-    public static void restockMedication(MedicationTrackingSystem MTS, Scanner scanner) {
-        System.out.print("Enter Medication Name to restock: ");
-        String restockMed = scanner.nextLine();
-        System.out.print("Enter quantity to restock: ");
-
-        while (!scanner.hasNextInt()) {
-            System.out.println("Invalid input. Please enter a valid number.");
-            scanner.next();
-        }
-        int quantity = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-
-        MTS.restockMedication(restockMed);
-    }
-
-    public static void printPatientPrescriptions(MedicationTrackingSystem MTS, Scanner scanner) {
-        System.out.print("Enter Patient's name to view prescriptions: ");
-        String scriptPatient = scanner.nextLine();
-        MTS.printPatientPrescriptions(scriptPatient);
-    }
-
 }
