@@ -6,39 +6,73 @@ import medTracker.*;
 import static menuUtils.MenuUtils.readDoctorsFromJson;
 import static menuUtils.MenuUtils.readPatientsFromJson;
 /**
-
-
-
  * The MedicationTrackingSystem class manages patients, doctors, medications,
-
-
  * and prescriptions within a pharmacy management system.
-
-
  */
+
 public class MedicationTrackingSystem {
     private final List<Patient> patients;
     private final List<Doctor> doctors;
     private final List<Medication> medications;
     private final List<Prescription> prescriptions;
+
     /**
-
-
-
      * Constructs a MedicationTrackingSystem with empty lists for patients,
-
-
      * doctors, medications, and prescriptions.
-
-
      */
+
     public MedicationTrackingSystem() {
         this.patients = new ArrayList<>();
         this.doctors = new ArrayList<>();
         this.medications = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
-
     }
+
+    /**
+     * Adds a new patient to the system.
+     *
+     * @param newPatient The patient to be added.
+     */
+
+    public void addPatient(Patient newPatient) {
+        if (!patients.contains(newPatient)) {
+            patients.add(newPatient);
+            System.out.println("Patient added successfully.");
+        } else {
+            System.out.println("Patient already exists.");
+        }
+    }
+
+    /**
+     * Returns the list of patients in the system.
+     *
+     * @return A list of patients.
+     */
+
+    public List<Patient> getPatients() {
+        return patients;
+    }
+
+    /**
+     * Adds a new doctor to the system.
+     *
+     * @param newDoctor The doctor to be added.
+     */
+
+    public void addDoctor(Doctor newDoctor) {
+        if (!doctors.contains(newDoctor)) {
+            doctors.add(newDoctor);
+            System.out.println("Doctor added successfully.");
+        } else {
+            System.out.println("Doctor already exists.");
+        }
+    }
+
+    /**
+     * Adds a new medication to the system.
+     *
+     * @param newMed The medication to be added.
+     */
 
     public void addMedication(Medication newMed) {
         if (!medications.contains(newMed)) {
@@ -49,100 +83,52 @@ public class MedicationTrackingSystem {
         }
     }
 
-    public void addPatientToDoctor(String patientName, String doctorName) {
-        Patient patient = findPatient(patientName);
-        Doctor doctor = findDoctor(doctorName);
-        if (patient != null && doctor != null) {
-            doctor.addPatient(patient);
-            System.out.println("Patient added to doctor's list.");
-        } else {
-            System.out.println("Doctor or patient not found.");
+    /**
+     * Finds a patient by name.
+     *
+     * @param name The name of the patient to find.
+     * @return The patient object if found, otherwise null.
+     */
+
+    private Patient findPatient(String name) {
+        for (Patient p : patients) {
+            if (p.getName().equalsIgnoreCase(name)) return p;
         }
+        return null;
     }
 
-    public void acceptPrescription(int prescriptionId, Doctor doctor, Patient patient, Medication medication, Date issueDate) {
-        if (patient != null && doctor != null && medication != null) {
-            Prescription prescription = new Prescription(prescriptionId, doctor, patient, medication, issueDate);
-            prescriptions.add(prescription);
-            System.out.println("Prescription added successfully for " + patient.getName() + ".");
-        } else {
-            System.out.println("Invalid prescription data. Please check patient, doctor, or medication details.");
+    /**
+     * Finds a doctor by name.
+     *
+     * @param name The name of the doctor to find.
+     * @return The doctor object if found, otherwise null.
+     */
+
+    private Doctor findDoctor(String name) {
+        for (Doctor d : doctors) {
+            if (d.getName().equalsIgnoreCase(name)) return d;
         }
+        return null;
     }
 
-    public void editMedication(String oldName, String newName) {
-        Medication med = findMedication(oldName);
-        if (med != null) {
-            med.setMedName(newName);
-            System.out.println("Medication updated.");
-        } else {
-            System.out.println("Medication not found.");
+    /**
+     * Finds a medication by name.
+     *
+     * @param name The name of the medication to find.
+     * @return The medication object if found, otherwise null.
+     */
+
+    private Medication findMedication(String name) {
+        for (Medication m : medications) {
+            if (m.getMedName().equalsIgnoreCase(name)) return m;
         }
+        return null;
     }
 
-    public void deletePatient(String name) {
-        patients.removeIf(p -> p.getName().equalsIgnoreCase(name));
-        System.out.println("Patient deleted successfully.");
-    }
-
-    public void deleteDoctor(String name) {
-        doctors.removeIf(d -> d.getName().equalsIgnoreCase(name));
-        System.out.println("Doctor deleted successfully.");
-    }
-
-    public void deleteMedication(String name) {
-        medications.removeIf(m -> m.getMedName().equalsIgnoreCase(name));
-        System.out.println("Medication deleted successfully.");
-    }
-
-    public void printDoctorPrescriptions(String doctorName) {
-        Doctor doctor = findDoctor(doctorName);
-        if (doctor != null) {
-            System.out.println("Prescriptions issued by Dr. " + doctorName + ":");
-            for (Prescription p : prescriptions) {
-                if (p.getDoctor().equals(doctor)) {
-                    System.out.println(p);
-                }
-            }
-        } else {
-            System.out.println("Doctor not found.");
-        }
-    }
-    public void printPatientPrescriptions(String patientName) {
-        Patient patient = findPatient(patientName);
-        if (patient != null) {
-            System.out.println("Prescriptions for " + patientName + ":");
-            List<Prescription> patientPrescriptions = patient.getPrescriptions();
-            if (patientPrescriptions.isEmpty()) {
-                System.out.println("No prescriptions found for this patient.");
-            } else {
-                for (Prescription p : patientPrescriptions) {
-                    System.out.println(p);
-                }
-            }
-        } else {
-            System.out.println("Patient not found.");
-        }
-    }
-
-
-    public void restockMedication(String medName) {
-        Scanner scanner = new Scanner(System.in);
-        Medication med = findMedication(medName);
-        if (med != null) {
-            System.out.print("Enter quantity to restock: ");
-            while (!scanner.hasNextInt()) {
-                System.out.println("Invalid input. Please enter a valid number.");
-                scanner.next();
-            }
-            int quantity = scanner.nextInt();
-            scanner.nextLine(); // Consume newline character
-            med.restock(quantity);
-            System.out.println("Medication restocked by " + quantity + " units.");
-        } else {
-            System.out.println("Medication not found.");
-        }
-    }
+    /**
+     * Generates a report of the current state of the system, including the
+     * number of patients, doctors, medications, and prescriptions.
+     */
 
     public void generateReport() {
         String patientPath = "src/main/java/medTracker/patients.json";
@@ -171,16 +157,5 @@ public class MedicationTrackingSystem {
             System.out.println("No expired medications found.");
         }
     }
-
-    public Patient findPatient(String name) {
-        return patients.stream().filter(p -> p.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
-    }
-
-    public Doctor findDoctor(String name) {
-        return doctors.stream().filter(d -> d.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
-    }
-
-    public Medication findMedication(String name) {
-        return medications.stream().filter(m -> m.getMedName().equalsIgnoreCase(name)).findFirst().orElse(null);
-    }
 }
+

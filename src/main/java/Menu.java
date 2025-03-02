@@ -13,11 +13,10 @@ public class Menu {
     private static final List<Patient> patients = new ArrayList<>();
     private static final List<Doctor> doctors = new ArrayList<>();
     public static void main(String[] args) {
-    MenuUtils menu = new MenuUtils();
-
         int choice;
 
         do {
+            // build menu in sout
             System.out.println("\nWelcome to the Med Tracker");
             System.out.println("What would you like to do?");
             System.out.println("1. Add a New Patient");
@@ -31,6 +30,7 @@ public class Menu {
             System.out.println("9. Print all Scripts for specified Patient");
             System.out.println("10. Exit");
             System.out.print("Enter your choice: ");
+            // input must be integer
 
             while (!scanner.hasNextInt()) {
                 System.out.println("ERROR: Invalid input, Please enter a number between 1 and 10.");
@@ -40,7 +40,9 @@ public class Menu {
             choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline character
 
-            switch (choice) {
+
+            // switch case for handling choice
+            switch ( choice ) {
                 case 1:
                     String patientPath = "src/main/java/medTracker/patients.json";
                     Patient newPatient = menu.addPatient(scanner);
@@ -80,7 +82,10 @@ public class Menu {
                     break;
                 case 10:
                     System.out.println("Exiting system, Have a good day!");
+                    // add logic for function here from module packages
                     break;
+
+                    // remove default for prod
                 default:
                     System.out.println("ERROR: Invalid input, Please enter a number between 1 and 10.");
             }
@@ -89,3 +94,4 @@ public class Menu {
         scanner.close();
     }
 }
+

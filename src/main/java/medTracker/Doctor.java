@@ -21,35 +21,33 @@ public class Doctor extends Person {
     private final List<Patient> patients;
 
     /**
-    * Constructs a doctor with given details.
+     * Constructs a new Doctor with the specified details.
      *
-     * @param id The Doctors ID.
-     * @param name The Doctors Name.
-     * @param age The Doctors Age.
-     * @param phoneNumber The Doctors Contact number.
-     * @param specialization The Doctors speciality.
-     * */
-    public Doctor(final int id
-            , final String name
-            , final int age
-            , final String phoneNumber
-            , final String specialization) {
+     * @param id The unique identifier of the doctor.
+     * @param name The name of the doctor.
+     * @param age The age of the doctor.
+     * @param phoneNumber The contact number of the doctor.
+     * @param specialization The field of expertise of the doctor.
+     */
+
+    public Doctor(int id, String name, int age, String phoneNumber, String specialization) {
         super(id, name, age, phoneNumber);
         this.specialization = specialization;
         this.patients = new ArrayList<>();
     }
 
     /**
-     * retrieves list of patients assigned to doctor.
+     * Returns the list of patients assigned to this doctor.
      *
-     * @return a list of patients.
-     * */
+     * @return List of patients.
+     */
+
     public List<Patient> getPatients() {
         return patients;
     }
 
     /**
-     * Adds a patient to the doctor list.
+     * Adds a patient to the doctor's list of patients.
      *
      * @param patient The patient to add.
      * */
