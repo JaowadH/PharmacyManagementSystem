@@ -3,7 +3,10 @@ package menuUtils;
 import java.util.*;
 import medTracker.*;
 
-import javax.print.Doc;
+/**
+ * The MedicationTrackingSystem class manages patients, doctors, medications,
+ * and prescriptions within a pharmacy management system.
+ */
 
 public class MedicationTrackingSystem {
     private final List<Patient> patients;
@@ -11,12 +14,23 @@ public class MedicationTrackingSystem {
     private final List<Medication> medications;
     private final List<Prescription> prescriptions;
 
+    /**
+     * Constructs a MedicationTrackingSystem with empty lists for patients,
+     * doctors, medications, and prescriptions.
+     */
+
     public MedicationTrackingSystem() {
         this.patients = new ArrayList<>();
         this.doctors = new ArrayList<>();
         this.medications = new ArrayList<>();
         this.prescriptions = new ArrayList<>();
     }
+
+    /**
+     * Adds a new patient to the system.
+     *
+     * @param newPatient The patient to be added.
+     */
 
     public void addPatient(Patient newPatient) {
         if (!patients.contains(newPatient)) {
@@ -27,9 +41,21 @@ public class MedicationTrackingSystem {
         }
     }
 
+    /**
+     * Returns the list of patients in the system.
+     *
+     * @return A list of patients.
+     */
+
     public List<Patient> getPatients() {
         return patients;
     }
+
+    /**
+     * Adds a new doctor to the system.
+     *
+     * @param newDoctor The doctor to be added.
+     */
 
     public void addDoctor(Doctor newDoctor) {
         if (!doctors.contains(newDoctor)) {
@@ -40,6 +66,12 @@ public class MedicationTrackingSystem {
         }
     }
 
+    /**
+     * Adds a new medication to the system.
+     *
+     * @param newMed The medication to be added.
+     */
+
     public void addMedication(Medication newMed) {
         if (!medications.contains(newMed)) {
             medications.add(newMed);
@@ -48,7 +80,13 @@ public class MedicationTrackingSystem {
             System.out.println("Medication already exists.");
         }
     }
-    
+
+    /**
+     * Finds a patient by name.
+     *
+     * @param name The name of the patient to find.
+     * @return The patient object if found, otherwise null.
+     */
 
     private Patient findPatient(String name) {
         for (Patient p : patients) {
@@ -57,12 +95,26 @@ public class MedicationTrackingSystem {
         return null;
     }
 
+    /**
+     * Finds a doctor by name.
+     *
+     * @param name The name of the doctor to find.
+     * @return The doctor object if found, otherwise null.
+     */
+
     private Doctor findDoctor(String name) {
         for (Doctor d : doctors) {
             if (d.getName().equalsIgnoreCase(name)) return d;
         }
         return null;
     }
+
+    /**
+     * Finds a medication by name.
+     *
+     * @param name The name of the medication to find.
+     * @return The medication object if found, otherwise null.
+     */
 
     private Medication findMedication(String name) {
         for (Medication m : medications) {
@@ -71,6 +123,10 @@ public class MedicationTrackingSystem {
         return null;
     }
 
+    /**
+     * Generates a report of the current state of the system, including the
+     * number of patients, doctors, medications, and prescriptions.
+     */
 
     public void generateReport() {
         System.out.println("\n--- Pharmacy Management System Report ---");
@@ -79,6 +135,10 @@ public class MedicationTrackingSystem {
         System.out.println("Medications: " + medications.size());
         System.out.println("Prescriptions: " + prescriptions.size());
     }
+
+    /**
+     * Checks for expired medications in the system and prints their names.
+     */
 
     public void checkExpiredMedications() {
         System.out.println("Checking for expired medications...");
