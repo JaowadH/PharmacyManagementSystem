@@ -25,10 +25,11 @@ Below is an overview of the main classes and their functionality:
 
 ### 1.4 How to Start the Application
 
-1. Clone the GitHub repository: `git clone <repository-url>`
-2. Compile the Java files: `javac *.java`
-3. Run the application: `java Menu`
-4. Follow on-screen instructions to interact with the system.
+1. Clone the GitHub repository: `git clone https://github.com/JaowadH/PharmacyManagementSystem.git`
+2. Navigate to Menu directory.
+3. Compile the Java files: `javac *.java`
+4. Run the application: `java Menu`
+5. Follow on-screen instructions to interact with the system.
 
 ### 1.5 Class Diagram
 
@@ -40,9 +41,9 @@ Below is an overview of the main classes and their functionality:
 
 ### 2.1 Installation Steps
 
-1. Download the latest release from GitHub: `git clone <repository-url>`
+1. Download the latest release from GitHub: `git clone https://github.com/JaowadH/PharmacyManagementSystem.git`
 2. Ensure Java is installed: `java -version`
-3. Navigate to the project directory: `cd <main-path>`
+3. Navigate to the project directory: `cd src\main\java`
 4. Compile and run the application: `javac *.java && java Menu`
 
 ### 2.2 Troubleshooting
