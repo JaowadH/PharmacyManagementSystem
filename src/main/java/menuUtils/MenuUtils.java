@@ -6,7 +6,20 @@ import java.util.Scanner;
 import java.util.Date;
 import medTracker.*;
 
+/**
+ * The MenuUtils class provides utility methods for managing medications, patients,
+ * and doctors within the MedicationTrackingSystem.
+ */
+
 public class MenuUtils {
+
+    /**
+     * Prompts the user to add a new medication to the MedicationTrackingSystem.
+     *
+     * @param MTS     The MedicationTrackingSystem instance to which the medication will be added.
+     * @param scanner The Scanner instance for user input.
+     */
+
     public static void addMed(MedicationTrackingSystem MTS, Scanner scanner) {
         // adding med id
         int medID;
@@ -50,7 +63,13 @@ public class MenuUtils {
         System.out.println("New Medication added: " + newMed);
 
         }
-        // checking expired meds
+
+        /**
+         * Checks for expired medications in the given list and prints their names.
+         *
+         * @param medications A list of medications to check for expiration.
+         */
+
         public static void checkExpiredMeds( List<Medication> medications ) {
             Date currDate = new Date();
 
@@ -67,7 +86,13 @@ public class MenuUtils {
                 System.out.println("No Expired Medications yet.");
             }
         }
-    // System report print
+
+    /**
+     * Prints a report of the current medications in the system.
+     *
+     * @param medications A list of medications to include in the report.
+     */
+
     public static void printSystemReport(List<Medication> medications) {
         System.out.print("\n System Report \n");
         if (medications.isEmpty()) {
@@ -78,6 +103,13 @@ public class MenuUtils {
             }
         }
     }
+
+    /**
+     * Prompts the user to add a new patient to the MedicationTrackingSystem.
+     *
+     * @param MTS     The MedicationTrackingSystem instance to which the patient will be added.
+     * @param scanner The Scanner instance for user input.
+     */
 
     public static void addPatient(MedicationTrackingSystem MTS, Scanner scanner) {
         int patientID;
@@ -117,6 +149,12 @@ public class MenuUtils {
         System.out.println("New Patient added: " + newPatient);
     }
 
+    /**
+     * Prompts the user to add a new doctor to the MedicationTrackingSystem.
+     *
+     * @param MTS     The MedicationTrackingSystem instance to which the doctor will be added.
+     * @param scanner The Scanner instance for user input.
+     */
 
     public static void addDoctor(MedicationTrackingSystem MTS, Scanner scanner) {
         int doctorID;
