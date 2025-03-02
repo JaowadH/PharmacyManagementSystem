@@ -1,17 +1,37 @@
-package src.main.java.menuUtils;
+package menuUtils;
 
 import java.util.*;
-import src.main.java.medTracker.*;
+import medTracker.*;
 
-import static src.main.java.menuUtils.MenuUtils.readDoctorsFromJson;
-import static src.main.java.menuUtils.MenuUtils.readPatientsFromJson;
+import static menuUtils.MenuUtils.readDoctorsFromJson;
+import static menuUtils.MenuUtils.readPatientsFromJson;
+/**
 
+
+
+ * The MedicationTrackingSystem class manages patients, doctors, medications,
+
+
+ * and prescriptions within a pharmacy management system.
+
+
+ */
 public class MedicationTrackingSystem {
     private final List<Patient> patients;
     private final List<Doctor> doctors;
     private final List<Medication> medications;
     private final List<Prescription> prescriptions;
+    /**
 
+
+
+     * Constructs a MedicationTrackingSystem with empty lists for patients,
+
+
+     * doctors, medications, and prescriptions.
+
+
+     */
     public MedicationTrackingSystem() {
         this.patients = new ArrayList<>();
         this.doctors = new ArrayList<>();

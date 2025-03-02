@@ -1,4 +1,4 @@
-package src.main.java.menuUtils;
+package menuUtils;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,12 +14,39 @@ import java.util.Date;
 
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import src.main.java.medTracker.*;
+import medTracker.*;
 
-import static src.main.java.medTracker.Doctor.fromDoctorJson;
-import static src.main.java.medTracker.Patient.fromPatientJson;
+import static medTracker.Doctor.fromDoctorJson;
+import static medTracker.Patient.fromPatientJson;
+/**
 
+
+
+ * The MenuUtils class provides utility methods for managing medications, patients,
+
+
+ * and doctors within the MedicationTrackingSystem.
+
+
+ */
 public class MenuUtils {
+    /**
+
+
+
+     * Prompts the user to add a new medication to the MedicationTrackingSystem.
+
+
+     *
+
+
+     * @param MTS     The MedicationTrackingSystem instance to which the medication will be added.
+
+
+     * @param scanner The Scanner instance for user input.
+
+
+     */
     public static void addMed(MedicationTrackingSystem MTS, Scanner scanner) {
         // adding med id
         int medID;
@@ -63,7 +90,20 @@ public class MenuUtils {
         System.out.println("New Medication added: " + newMed);
 
         }
-        // checking expired meds
+    /**
+
+
+
+     * Checks for expired medications in the given list and prints their names.
+
+
+     *
+
+
+     * @param medications A list of medications to check for expiration.
+
+
+     */
         public static void checkExpiredMeds( List<Medication> medications ) {
             Date currDate = new Date();
 

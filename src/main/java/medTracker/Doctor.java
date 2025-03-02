@@ -1,4 +1,4 @@
-package src.main.java.medTracker;
+package medTracker;
 
 import org.json.simple.JSONObject;
 
@@ -7,7 +7,8 @@ import java.util.List;
 
 
 /**
-* Represents a Doctor.
+ * Represents a Doctor.
+ * A doctor is a specialized person who can have multiple patients.
 * */
 public class Doctor extends Person {
     /**

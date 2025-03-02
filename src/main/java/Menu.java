@@ -2,8 +2,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import src.main.java.medTracker.*;
-import src.main.java.menuUtils.*;
+import medTracker.*;
+import menuUtils.*;
 
 public class Menu {
     // Lets scanner take input
