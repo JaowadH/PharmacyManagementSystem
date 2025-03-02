@@ -10,6 +10,11 @@ public class Person {
     private String name;
     private int age;
     private String phoneNumber;
+    /**
+
+    private String name;
+    private int age;
+    private String phoneNumber;
 
 
     /**
@@ -77,7 +82,7 @@ public class Person {
      */
 
     public void setName(String name) {
-         this.name = name; 
+         this.name = name;
     }
 
     /**
@@ -87,7 +92,7 @@ public class Person {
      */
 
     public void setAge(int age) {
-         this.age = age; 
+         this.age = age;
     }
 
     /**
@@ -97,7 +102,7 @@ public class Person {
      */
 
     public void setPhoneNumber(String phoneNumber) {
-         this.phoneNumber = phoneNumber; 
+         this.phoneNumber = phoneNumber;
     }
 
     @Override

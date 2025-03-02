@@ -1,11 +1,23 @@
 package menuUtils;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Date;
+
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import medTracker.*;
 
+import static medTracker.Doctor.fromDoctorJson;
+import static medTracker.Patient.fromPatientJson;
 /**
  * The MenuUtils class provides utility methods for managing medications, patients,
  * and doctors within the MedicationTrackingSystem.
@@ -145,18 +157,46 @@ public class MenuUtils {
         String patientPhoneNumber = scanner.nextLine();
 
         // patient object
-        Patient newPatient = new Patient(patientID, patientName, patientAge, patientPhoneNumber);
-        System.out.println("New Patient added: " + newPatient);
+
+        return new Patient(patientID, patientName, patientAge, patientPhoneNumber);
     }
 
-    /**
-     * Prompts the user to add a new doctor to the MedicationTrackingSystem.
-     *
-     * @param MTS     The MedicationTrackingSystem instance to which the doctor will be added.
-     * @param scanner The Scanner instance for user input.
-     */
+    public static void savePatientToJson(List<Patient> patients, String filePath) {
+        JSONArray jsonArray = new JSONArray();
+        for (Patient patient : patients) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", patient.getId());
+            jsonObject.put("name", patient.getName());
+            jsonObject.put("age", patient.getAge());
+            jsonObject.put("phoneNumber", patient.getPhoneNumber());
 
-    public static void addDoctor(MedicationTrackingSystem MTS, Scanner scanner) {
+            jsonArray.add(jsonObject);
+        }
+        try (FileWriter fileWriter = new FileWriter(filePath)) { // Append mode
+                fileWriter.write(jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Patient> readPatientsFromJson(String filePath) {
+        List<Patient> patients = new ArrayList<>();
+        try (FileReader fileReader = new FileReader(filePath)) {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader); // Parse the file into a JSONArray
+
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+                patients.add(fromPatientJson(jsonObject)); // Convert JSON object to Patient and add to the list
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return patients;
+    }
+
+
+    public Doctor addDoctor(Scanner scanner) {
         int doctorID;
         while (true) {
             System.out.print("Enter Doctors ID: ");
@@ -193,7 +233,94 @@ public class MenuUtils {
         String Spec = scanner.nextLine();
 
 
-        Doctor newDoctor = new Doctor(doctorID, doctorName, doctorAge, doctorPhoneNumber, Spec);
-        System.out.println("Entering Doctor: " + newDoctor + " With Specialization: " + newDoctor.getSpecialization());
+        return new Doctor(doctorID, doctorName, doctorAge, doctorPhoneNumber, Spec);
     }
+
+    public static void saveDoctorToJson(List<Doctor> doctors, String filePath) {
+        JSONArray jsonArray = new JSONArray();
+        for (Doctor doctor : doctors) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", doctor.getId());
+            jsonObject.put("name", doctor.getName());
+            jsonObject.put("age", doctor.getAge());
+            jsonObject.put("phoneNumber", doctor.getPhoneNumber());
+            jsonObject.put("specialization", doctor.getSpecialization());
+
+            jsonArray.add(jsonObject);
+        }
+        try (FileWriter fileWriter = new FileWriter(filePath)) { // Append mode
+            fileWriter.write(jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Doctor> readDoctorsFromJson(String filePath) {
+        List<Doctor> doctors = new ArrayList<>();
+        try (FileReader fileReader = new FileReader(filePath)) {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader); // Parse the file into a JSONArray
+
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+                doctors.add(fromDoctorJson(jsonObject));
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return doctors;
+    }
+
+    public static void handlePrescription(MedicationTrackingSystem MTS, Scanner scanner) {
+        System.out.print("Enter Patient's name for prescription: ");
+        String prescriptPatient = scanner.nextLine();
+        System.out.print("Enter Doctor's name issuing the prescription: ");
+        String prescriptDoctor = scanner.nextLine();
+        System.out.print("Enter Medication Name: ");
+        String prescriptMed = scanner.nextLine();
+
+        Patient patient = MTS.findPatient(prescriptPatient);
+        Doctor doctor = MTS.findDoctor(prescriptDoctor);
+        Medication medication = MTS.findMedication(prescriptMed);
+
+        if (patient != null && doctor != null && medication != null) {
+            System.out.print("Enter Dosage: ");
+            int dosage = scanner.nextInt();
+            System.out.print("Enter Duration (days): ");
+            int duration = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            MTS.acceptPrescription(patient.getId(), doctor, patient, medication, new java.util.Date());
+            System.out.println("Prescription added successfully.");
+        } else {
+            System.out.println("Invalid input. Please check if the patient, doctor, or medication exists.");
+        }
+    }
+    public static void docScript(MedicationTrackingSystem MTS, Scanner scanner) {
+        System.out.print("Enter Doctor's name to view prescriptions: ");
+        String scriptDoc = scanner.nextLine();
+        MTS.printDoctorPrescriptions(scriptDoc);
+    }
+
+    public static void restockMedication(MedicationTrackingSystem MTS, Scanner scanner) {
+        System.out.print("Enter Medication Name to restock: ");
+        String restockMed = scanner.nextLine();
+        System.out.print("Enter quantity to restock: ");
+
+        while (!scanner.hasNextInt()) {
+            System.out.println("Invalid input. Please enter a valid number.");
+            scanner.next();
+        }
+        int quantity = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        MTS.restockMedication(restockMed);
+    }
+
+    public static void printPatientPrescriptions(MedicationTrackingSystem MTS, Scanner scanner) {
+        System.out.print("Enter Patient's name to view prescriptions: ");
+        String scriptPatient = scanner.nextLine();
+        MTS.printPatientPrescriptions(scriptPatient);
+    }
+
 }

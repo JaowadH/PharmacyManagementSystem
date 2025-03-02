@@ -3,6 +3,8 @@ package menuUtils;
 import java.util.*;
 import medTracker.*;
 
+import static menuUtils.MenuUtils.readDoctorsFromJson;
+import static menuUtils.MenuUtils.readPatientsFromJson;
 /**
  * The MedicationTrackingSystem class manages patients, doctors, medications,
  * and prescriptions within a pharmacy management system.
@@ -129,30 +131,31 @@ public class MedicationTrackingSystem {
      */
 
     public void generateReport() {
-        System.out.println("\n--- Pharmacy Management System Report ---");
-        System.out.println("Patients: " + patients.size());
-        System.out.println("Doctors: " + doctors.size());
-        System.out.println("Medications: " + medications.size());
-        System.out.println("Prescriptions: " + prescriptions.size());
+        String patientPath = "src/main/java/medTracker/patients.json";
+        String DoctorPath = "src/main/java/medTracker/doctors.json";
+        List<Patient> loadedPatients = readPatientsFromJson(patientPath);
+        List<Doctor> loadedDoctors = readDoctorsFromJson(DoctorPath);
+        for (Patient patient : loadedPatients) {
+            System.out.println(patient);
+        }
+        for (Doctor doctor : loadedDoctors) {
+            System.out.println(doctor);
+        }
     }
-
-    /**
-     * Checks for expired medications in the system and prints their names.
-     */
 
     public void checkExpiredMedications() {
         System.out.println("Checking for expired medications...");
         Date currDate = new Date();
-        boolean hasExpired = false;
-
+        boolean foundExpired = false;
         for (Medication med : medications) {
             if (med.getExpiryDate().compareTo(currDate) < 0) {
                 System.out.println("Expired: " + med.getMedName());
-                hasExpired = true;
+                foundExpired = true;
             }
         }
-        if (!hasExpired) {
-            System.out.println("No expired medications.");
+        if (!foundExpired) {
+            System.out.println("No expired medications found.");
         }
     }
 }
+

@@ -1,14 +1,17 @@
-/**
- * Represents a medication in the medical tracking system.
- */
-
 package medTracker;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
+/**
 
+
+
+ * Represents a medication in the medical tracking system.
+
+
+ */
 public class Medication {
     private int medID;
     private String medName;

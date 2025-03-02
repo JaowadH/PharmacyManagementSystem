@@ -2,19 +2,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import medTracker.Doctor;
-import medTracker.Patient;
-import menuUtils.MedicationTrackingSystem;
-import menuUtils.MenuUtils;
-import medTracker.Medication;
+import medTracker.*;
+import menuUtils.*;
 
 public class Menu {
-        // lets scanner take input
-        private static final Scanner scanner = new Scanner(System.in);
-        private static final List<Medication> medications = new ArrayList<>();
-        private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
+    // Lets scanner take input
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final List<Medication> medications = new ArrayList<>();
+    private static final MedicationTrackingSystem MTS = new MedicationTrackingSystem();
+    private static final List<Patient> patients = new ArrayList<>();
+    private static final List<Doctor> doctors = new ArrayList<>();
     public static void main(String[] args) {
-        // sets attributes for menu
         int choice;
 
         do {
@@ -40,49 +38,47 @@ public class Menu {
                 scanner.next();
             }
             choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consume newline character
 
 
             // switch case for handling choice
             switch ( choice ) {
                 case 1:
-                    MenuUtils.addPatient(MTS, scanner);
+                    String patientPath = "src/main/java/medTracker/patients.json";
+                    Patient newPatient = menu.addPatient(scanner);
+                    if (newPatient != null) {
+                        patients.add(newPatient);
+                    }
+                    MenuUtils.savePatientToJson(patients, patientPath);
                     break;
                 case 2:
-                    MenuUtils.addDoctor(MTS, scanner);
+                    String doctorPath = "src/main/java/medTracker/doctors.json";
+                    Doctor newDoctor = menu.addDoctor(scanner);
+                    if (newDoctor != null) {
+                        doctors.add(newDoctor);
+                    }
+                    MenuUtils.saveDoctorToJson(doctors, doctorPath);
                     break;
                 case 3:
                     MenuUtils.addMed(MTS, scanner);
                     break;
                 case 4:
-                    MenuUtils.printSystemReport(medications);
+                    MTS.generateReport();
                     break;
                 case 5:
-                    MenuUtils.checkExpiredMeds(medications);
+                    MTS.checkExpiredMedications();
                     break;
                 case 6:
-                    System.out.print("Enter Patients name for prescription: ");
-                    String prescriptPatient = scanner.nextLine();
-                    System.out.print("Enter Medication Name: ");
-                    String prescriptMed = scanner.nextLine();
-                    System.out.println("Processing prescription for " + prescriptPatient + ", With Drug: " + prescriptMed + "...");
-                    // add logic for function here from module packages
+                    MenuUtils.handlePrescription(MTS, scanner);
                     break;
                 case 7:
-                    System.out.print("Enter medTracker.Doctor's name to view prescriptions: ");
-                    String scriptDoc = scanner.nextLine();
-                    System.out.println("Fetching prescriptions for Dr. " + scriptDoc + "...");
-                    // add logic for function here from module packages
+                    MenuUtils.docScript(MTS, scanner);
                     break;
                 case 8:
-                    System.out.println("Restocking the drugs in Pharmacy...");
-                    // add logic for function here from module packages
+                    MenuUtils.restockMedication(MTS, scanner);
                     break;
                 case 9:
-                    System.out.print("Enter patients name to view prescriptions: ");
-                    String scriptPatient = scanner.nextLine();
-                    System.out.println("Fetching prescriptions for " + scriptPatient + "...");
-                    // add logic for function here from module packages
+                    MenuUtils.printPatientPrescriptions(MTS, scanner);
                     break;
                 case 10:
                     System.out.println("Exiting system, Have a good day!");
@@ -93,7 +89,8 @@ public class Menu {
                 default:
                     System.out.println("ERROR: Invalid input, Please enter a number between 1 and 10.");
             }
-        } while ( choice != 10);
+        } while (choice != 10);
+
         scanner.close();
     }
 }

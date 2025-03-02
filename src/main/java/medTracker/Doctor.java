@@ -1,15 +1,23 @@
-/**
- * Represents a doctor in the medical tracking system.
- * A doctor is a specialized person who can have multiple patients.
- */
-
 package medTracker;
+
+import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Represents a Doctor.
+ * A doctor is a specialized person who can have multiple patients.
+* */
 public class Doctor extends Person {
+    /**
+     * The unique Specialization for the doctor.
+     * */
     private String specialization;
+    /**
+     * List of patients for doctor.
+     * */
     private final List<Patient> patients;
 
     /**
@@ -41,38 +49,86 @@ public class Doctor extends Person {
     /**
      * Adds a patient to the doctor's list of patients.
      *
-     * @param patient The patient to be added.
-     */
-
-    public void addPatient(Patient patient) {
-        patients.add(patient);
+     * @param patient The patient to add.
+     * */
+    public void addPatient(final Patient patient) {
+        if (!patients.contains(patient)) {
+            patients.add(patient);
+        }
     }
-
     /**
-     * Returns the doctor's specialization.
+     * Gets doctor speciality.
      *
-     * @return The specialization of the doctor.
-     */
-
+     * @return the doctors specialization.
+     * */
     public String getSpecialization() {
         return specialization;
     }
 
     /**
-     * Sets the doctor's specialization.
+     * Sets Doctor Speciality.
      *
-     * @param specialization The new specialization of the doctor.
-     */
-
-    public void setSpecialization(String specialization) {
+     * @param specialization The Doctors specialization.
+     * */
+    public void setSpecialization(final String specialization) {
         this.specialization = specialization;
     }
 
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", getId());
+        jsonObject.put("name", getName());
+        jsonObject.put("age", getAge());
+        jsonObject.put("phoneNumber", getPhoneNumber());
+        jsonObject.put("specialization", getSpecialization());
+        return jsonObject;
+    }
+
+    public static Doctor fromDoctorJson(JSONObject jsonObject) {
+        int id = getIntValue(jsonObject.get("id"));
+        String name = (String) jsonObject.get("name");
+        int age = getIntValue(jsonObject.get("age"));
+        String phoneNumber = (String) jsonObject.get("phoneNumber");
+        String Spec = (String) jsonObject.get("Specialization");
+
+        return new Doctor(id
+                , name
+                , age
+                , phoneNumber
+                , Spec);
+    }
+
+    private static int getIntValue(Object value) {
+        if (value instanceof Long) {
+            return ((Long) value).intValue();
+        } else if (value instanceof Integer) {
+            return (Integer) value;
+        } else {
+            throw new IllegalArgumentException("Invalid type for integer value: " + value.getClass());
+        }
+    }
+    /**
+     * Returns a string representation of the Doctor object.
+     * The string includes the doctor's
+     * ID, name, age, phone number, specialization,
+     * and the number of patients assigned to the doctor.
+     *
+     * @return A formatted string containing the doctor's details.
+     */
     @Override
     public String toString() {
-        return String.format(
-            "Doctor ID: %d%nDoctor Name: %s%nDoctor Age: %d%nDoctor Phone Number: %s%nSpecialization: %s%nNumber of Patients: %d%n",
-            getId(), getName(), getAge(), getPhoneNumber(), specialization, patients.size()
+        return String.format("Doctor ID: %d%n"
+                        +"Doctor Name: %s%n"
+                        +"Doctor Age: %d%n"
+                        +"Doctor Phone Number: %s%n"
+                        +"Specialization: %s%n"
+                        +"Number of Patients: %d%n",
+                getId()
+                ,getName()
+                ,getAge()
+                ,getPhoneNumber()
+                ,specialization
+                ,patients.size()
         );
     }
 }

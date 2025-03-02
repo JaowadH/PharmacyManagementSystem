@@ -1,5 +1,7 @@
 package medTracker;
 
+import org.json.simple.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,10 +11,12 @@ import java.util.List;
  */
 
 public class Patient extends Person {
-    private List<Medication> medications;
-    private List<Prescription> prescriptions;
-
+    private final List<Medication> medications;
+    private final List<Prescription> prescriptions;
     /**
+
+
+
      * Constructs a new Patient with the given details.
      *
      * @param id          The unique identifier for the patient.
@@ -67,9 +71,42 @@ public class Patient extends Person {
         return prescriptions;
     }
 
+    public JSONObject toJson() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", getId());
+        jsonObject.put("name", getName());
+        jsonObject.put("age", getAge());
+        jsonObject.put("phoneNumber", getPhoneNumber());
+        jsonObject.put("medications", getMedications());
+        jsonObject.put("prescriptions", getPrescriptions());
+        return jsonObject;
+    }
+
+    public static Patient fromPatientJson(JSONObject jsonObject) {
+        int id = getIntValue(jsonObject.get("id"));
+        String name = (String) jsonObject.get("name");
+        int age = getIntValue(jsonObject.get("age"));
+        String phoneNumber = (String) jsonObject.get("phoneNumber");
+        return new Patient(id
+                , name
+                , age
+                , phoneNumber);
+    }
+
+    private static int getIntValue(Object value) {
+        if (value instanceof Long) {
+            return ((Long) value).intValue();
+        }
+        return (Integer) value;
+    }
     @Override
     public String toString() {
-        return String.format("Patient ID: %d%n Patient name: %s%n, Patient age: %d%n Patient phone number: %s%n Patient medication: %d%n Patient prescription: %d%n ",
-        getId(), getName(), getAge(), getPhoneNumber(), medications.size(), prescriptions.size() );
+        return String.format("Patient ID: %d%n " +
+                        "Patient name: %s%n " +
+                        "Patient age: %d%n " +
+                        "Patient phone number: %s%n " +
+                        "Patient medication: %d%n " +
+                        "Patient prescription: %d%n "
+        ,getId(), getName(), getAge(), getPhoneNumber(), medications.size(), prescriptions.size() );
     }
 }

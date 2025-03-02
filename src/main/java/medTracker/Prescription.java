@@ -27,7 +27,8 @@ public class Prescription {
      * @param prescriptionExpiry The expiration date of the prescription.
      */
 
-    public Prescription(int prescriptionID, Doctor doctor, Patient patient, Medication medication, Date prescriptionExpiry) {
+    public Prescription(int prescriptionID, Doctor doctor, Patient patient, Medication medication,
+                        Date prescriptionExpiry) {
         this.prescriptionID = prescriptionID;
         this.doctor = doctor;
         this.patient = patient;
