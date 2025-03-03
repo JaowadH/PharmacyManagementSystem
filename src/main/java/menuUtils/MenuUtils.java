@@ -1,267 +1,108 @@
 package menuUtils;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.InputMismatchException;
 import java.util.Scanner;
-import java.util.Date;
-
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import medTracker.*;
-
-import static medTracker.Doctor.fromDoctorJson;
-import static medTracker.Patient.fromPatientJson;
-/**
- * The MenuUtils class provides utility methods for managing medications, patients,
- * and doctors within the MedicationTrackingSystem.
- */
 
 public class MenuUtils {
 
-    /**
-     * Prompts the user to add a new medication to the MedicationTrackingSystem.
-     *
-     * @param MTS     The MedicationTrackingSystem instance to which the medication will be added.
-     * @param scanner The Scanner instance for user input.
-     */
-
-    public static void addMed(MedicationTrackingSystem MTS, Scanner scanner) {
-        // adding med id
-        int medID;
-        while (true) {
-            System.out.print("Enter Medication ID: ");
-            if (scanner.hasNextInt()) {
-                medID = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("ERROR: Invalid input, Please enter a number for ID.");
-                scanner.next();
-            }
-        }
-
-        // adding med name
-        System.out.print("Enter Medication Name: ");
-        String medName = scanner.nextLine();
-
-        // adding med dose
-        System.out.print("Enter Dosage: ");
-        String dose = scanner.nextLine();
-
-        // adding quantity
-        int quantity;
-        while (true) {
-            System.out.print("Enter Quantity: ");
-            if (scanner.hasNextInt()) {
-                quantity = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("ERROR: Invalid input, Please enter a number for Quantity.");
-                scanner.next();
-            }
-        }
-
-        // med object
-        Medication newMed = new Medication(medID, medName, dose, quantity);
-        MTS.addMedication(newMed);
-        System.out.println("New Medication added: " + newMed);
-
-        }
-
-        /**
-         * Checks for expired medications in the given list and prints their names.
-         *
-         * @param medications A list of medications to check for expiration.
-         */
-
-        public static void checkExpiredMeds( List<Medication> medications ) {
-            Date currDate = new Date();
-
-            System.out.println("\n Expired Medications \n");
-            boolean hasExpired = false;
-            for (Medication med : medications) {
-                if (med.getExpiryDate().compareTo(currDate) < 0 ) {
-                    System.out.println("Expired: " + med);
-                    hasExpired = true;
-                }
-            }
-
-            if (!hasExpired) {
-                System.out.println("No Expired Medications yet.");
-            }
-        }
-
-    /**
-     * Prints a report of the current medications in the system.
-     *
-     * @param medications A list of medications to include in the report.
-     */
-
-    public static void printSystemReport(List<Medication> medications) {
-        System.out.print("\n System Report \n");
-        if (medications.isEmpty()) {
-            System.out.println("No Medications in system yet.");
-        } else {
-            for (Medication med : medications) {
-                System.out.println(med);
-            }
-        }
-    }
-
-
-    public static Patient addPatient(Scanner scanner) {
-        int patientID;
-        while (true) {
-            System.out.print("Enter Patient ID: ");
-            if (scanner.hasNextInt()) {
-                patientID = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("ERROR: Invalid input, Please enter a number for Patient ID.");
-                scanner.next();
-            }
-        }
+    // ✅ Add a patient
+    public static void addPatient(MedicationTrackingSystem MTS, Scanner scanner) {
+        int patientID = getValidInt(scanner, "Enter Patient ID: ");
+        scanner.nextLine(); // Consume newline
 
         System.out.print("Enter Patient Name: ");
         String patientName = scanner.nextLine();
 
-        int patientAge;
-        while (true) {
-            System.out.print("Enter Patient Age: ");
-            if (scanner.hasNextInt()) {
-                patientAge = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("ERROR: Invalid input, Please enter a number for Patient Age.");
-                scanner.next();
-            }
-        }
+        int patientAge = getValidInt(scanner, "Enter Patient Age: ");
+        scanner.nextLine();
 
-        System.out.print("Enter Patient Phone number: ");
+        System.out.print("Enter Patient Phone Number: ");
         String patientPhoneNumber = scanner.nextLine();
 
-        // patient object
-
-        return new Patient(patientID, patientName, patientAge, patientPhoneNumber);
+        Patient newPatient = new Patient(patientID, patientName, patientAge, patientPhoneNumber);
+        MTS.addPatient(newPatient);
     }
 
-    public static void savePatientToJson(List<Patient> patients, String filePath) {
-        JSONArray jsonArray = new JSONArray();
-        for (Patient patient : patients) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", patient.getId());
-            jsonObject.put("name", patient.getName());
-            jsonObject.put("age", patient.getAge());
-            jsonObject.put("phoneNumber", patient.getPhoneNumber());
+    // ✅ Add a doctor
+    public static void addDoctor(MedicationTrackingSystem MTS, Scanner scanner) {
+        int doctorID = getValidInt(scanner, "Enter Doctor's ID: ");
+        scanner.nextLine();
 
-            jsonArray.add(jsonObject);
-        }
-        try (FileWriter fileWriter = new FileWriter(filePath)) { // Append mode
-                fileWriter.write(jsonArray.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static List<Patient> readPatientsFromJson(String filePath) {
-        List<Patient> patients = new ArrayList<>();
-        try (FileReader fileReader = new FileReader(filePath)) {
-            JSONParser jsonParser = new JSONParser();
-            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader); // Parse the file into a JSONArray
-
-            for (Object obj : jsonArray) {
-                JSONObject jsonObject = (JSONObject) obj;
-                patients.add(fromPatientJson(jsonObject)); // Convert JSON object to Patient and add to the list
-            }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return patients;
-    }
-
-
-    public static Doctor addDoctor(Scanner scanner) {
-        int doctorID;
-        while (true) {
-            System.out.print("Enter Doctors ID: ");
-            if (scanner.hasNextInt()) {
-                doctorID = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("ERROR: Invalid input, Please enter a number for Doctor ID.");
-                scanner.next();
-            }
-        }
-
-        System.out.print("Enter Doctors Name: ");
+        System.out.print("Enter Doctor's Name: ");
         String doctorName = scanner.nextLine();
 
-        int doctorAge;
-        while (true) {
-            System.out.print("Enter Doctor Age: ");
-            if (scanner.hasNextInt()) {
-                doctorAge = scanner.nextInt();
-                scanner.nextLine();
-                break;
-            } else {
-                System.out.println("ERROR: Invalid input, Please enter a number for Doctor Age.");
-                scanner.next();
-            }
-        }
+        int doctorAge = getValidInt(scanner, "Enter Doctor Age: ");
+        scanner.nextLine();
 
-        System.out.print("Enter Doctors Phone Number: ");
+        System.out.print("Enter Doctor's Phone Number: ");
         String doctorPhoneNumber = scanner.nextLine();
 
-        System.out.print("Enter Doctors Specialization: ");
-        String Spec = scanner.nextLine();
+        System.out.print("Enter Doctor's Specialization: ");
+        String specialization = scanner.nextLine();
 
-
-        return new Doctor(doctorID, doctorName, doctorAge, doctorPhoneNumber, Spec);
+        Doctor newDoctor = new Doctor(doctorID, doctorName, doctorAge, doctorPhoneNumber, specialization);
+        MTS.addDoctor(newDoctor);
     }
 
-    public static void saveDoctorToJson(List<Doctor> doctors, String filePath) {
-        JSONArray jsonArray = new JSONArray();
-        for (Doctor doctor : doctors) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", doctor.getId());
-            jsonObject.put("name", doctor.getName());
-            jsonObject.put("age", doctor.getAge());
-            jsonObject.put("phoneNumber", doctor.getPhoneNumber());
-            jsonObject.put("specialization", doctor.getSpecialization());
+    // ✅ Add a medication
+    public static void addMed(MedicationTrackingSystem MTS, Scanner scanner) {
+        int medID = getValidInt(scanner, "Enter Medication ID: ");
+        scanner.nextLine();
 
-            jsonArray.add(jsonObject);
-        }
-        try (FileWriter fileWriter = new FileWriter(filePath)) { // Append mode
-            fileWriter.write(jsonArray.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.print("Enter Medication Name: ");
+        String medName = scanner.nextLine();
+
+        System.out.print("Enter Medication Dosage (mg): ");
+        String dose = scanner.nextLine();
+
+        int quantity = getValidInt(scanner, "Enter Medication Quantity: ");
+        scanner.nextLine();
+
+        Medication newMed = new Medication(medID, medName, dose, quantity);
+        MTS.addMedication(newMed);
     }
 
-    public static List<Doctor> readDoctorsFromJson(String filePath) {
-        List<Doctor> doctors = new ArrayList<>();
-        try (FileReader fileReader = new FileReader(filePath)) {
-            JSONParser jsonParser = new JSONParser();
-            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader); // Parse the file into a JSONArray
+    // ✅ Print System Report (Fixed)
+    public static void printSystemReport(MedicationTrackingSystem MTS) {
+        MTS.generateReport();
+    }
 
-            for (Object obj : jsonArray) {
-                JSONObject jsonObject = (JSONObject) obj;
-                doctors.add(fromDoctorJson(jsonObject));
+    // ✅ Check expired meds (Fixed)
+    public static void checkExpiredMeds(MedicationTrackingSystem MTS) {
+        MTS.checkExpiredMedications();
+    }
+
+    // ✅ Process a new prescription (Placeholder for now)
+    public static void processPrescription(MedicationTrackingSystem MTS, Scanner scanner) {
+        System.out.println("Processing prescription... (Implementation needed)");
+    }
+
+    // ✅ Print all scripts for a specified doctor (Placeholder)
+    public static void printDoctorPrescriptions(MedicationTrackingSystem MTS, Scanner scanner) {
+        System.out.println("Printing doctor's prescriptions... (Implementation needed)");
+    }
+
+    // ✅ Restock pharmacy (Placeholder)
+    public static void restockPharmacy(MedicationTrackingSystem MTS) {
+        System.out.println("Restocking pharmacy... (Implementation needed)");
+    }
+
+    // ✅ Print all scripts for a specified patient (Placeholder)
+    public static void printPatientPrescriptions(MedicationTrackingSystem MTS, Scanner scanner) {
+        System.out.println("Printing patient's prescriptions... (Implementation needed)");
+    }
+
+    // ✅ Utility function to get valid integer input
+    private static int getValidInt(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.print(prompt);
+            if (scanner.hasNextInt()) {
+                return scanner.nextInt();
+            } else {
+                System.out.println("ERROR: Invalid input. Please enter a valid number.");
+                scanner.next(); // Clear invalid input
             }
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
         }
-        return doctors;
     }
 }
