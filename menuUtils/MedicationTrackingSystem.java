@@ -1,98 +1,103 @@
 package menuUtils;
 
-import java.util.*;
+import java.sql.*;
+import java.util.Date;
 import medTracker.*;
 
-import javax.print.Doc;
-
 public class MedicationTrackingSystem {
-    private final List<Patient> patients;
-    private final List<Doctor> doctors;
-    private final List<Medication> medications;
-    private final List<Prescription> prescriptions;
 
     public MedicationTrackingSystem() {
-        this.patients = new ArrayList<>();
-        this.doctors = new ArrayList<>();
-        this.medications = new ArrayList<>();
-        this.prescriptions = new ArrayList<>();
+        DatabaseManager.initializeDatabase();
     }
 
+    // ✅ Add a new patient
     public void addPatient(Patient newPatient) {
-        if (!patients.contains(newPatient)) {
-            patients.add(newPatient);
+        String query = "INSERT INTO Patients (patientID, name, age, phoneNumber) VALUES (?, ?, ?, ?)";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, newPatient.getId());
+            stmt.setString(2, newPatient.getName());
+            stmt.setInt(3, newPatient.getAge());
+            stmt.setString(4, newPatient.getPhoneNumber());
+            stmt.executeUpdate();
             System.out.println("Patient added successfully.");
-        } else {
-            System.out.println("Patient already exists.");
+        } catch (SQLException e) {
+            System.out.println("Error adding patient: " + e.getMessage());
         }
     }
 
-    public List<Patient> getPatients() {
-        return patients;
-    }
-
+    // ✅ Add a new doctor
     public void addDoctor(Doctor newDoctor) {
-        if (!doctors.contains(newDoctor)) {
-            doctors.add(newDoctor);
+        String query = "INSERT INTO Doctors (doctorID, name, age, phoneNumber, specialization) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, newDoctor.getId());
+            stmt.setString(2, newDoctor.getName());
+            stmt.setInt(3, newDoctor.getAge());
+            stmt.setString(4, newDoctor.getPhoneNumber());
+            stmt.setString(5, newDoctor.getSpecialization());
+            stmt.executeUpdate();
             System.out.println("Doctor added successfully.");
-        } else {
-            System.out.println("Doctor already exists.");
+        } catch (SQLException e) {
+            System.out.println("Error adding doctor: " + e.getMessage());
         }
     }
 
+    // ✅ Add a new medication
     public void addMedication(Medication newMed) {
-        if (!medications.contains(newMed)) {
-            medications.add(newMed);
+        String query = "INSERT INTO Medications (medID, medName, dose, quantity, expiryDate) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, newMed.getMedID());
+            stmt.setString(2, newMed.getMedName());
+            stmt.setString(3, newMed.getDose());
+            stmt.setInt(4, newMed.getQuantity());
+            stmt.setDate(5, new java.sql.Date(newMed.getExpiryDate().getTime()));
+            stmt.executeUpdate();
             System.out.println("Medication added successfully.");
-        } else {
-            System.out.println("Medication already exists.");
+        } catch (SQLException e) {
+            System.out.println("Error adding medication: " + e.getMessage());
         }
     }
-    
 
-    private Patient findPatient(String name) {
-        for (Patient p : patients) {
-            if (p.getName().equalsIgnoreCase(name)) return p;
-        }
-        return null;
-    }
-
-    private Doctor findDoctor(String name) {
-        for (Doctor d : doctors) {
-            if (d.getName().equalsIgnoreCase(name)) return d;
-        }
-        return null;
-    }
-
-    private Medication findMedication(String name) {
-        for (Medication m : medications) {
-            if (m.getMedName().equalsIgnoreCase(name)) return m;
-        }
-        return null;
-    }
-
-
+    // ✅ Generate system report
     public void generateReport() {
         System.out.println("\n--- Pharmacy Management System Report ---");
-        System.out.println("Patients: " + patients.size());
-        System.out.println("Doctors: " + doctors.size());
-        System.out.println("Medications: " + medications.size());
-        System.out.println("Prescriptions: " + prescriptions.size());
+        try (Connection conn = DatabaseManager.connect()) {
+            reportCount(conn, "Patients");
+            reportCount(conn, "Doctors");
+            reportCount(conn, "Medications");
+            reportCount(conn, "Prescriptions");
+        } catch (SQLException e) {
+            System.out.println("Error generating report: " + e.getMessage());
+        }
     }
 
-    public void checkExpiredMedications() {
-        System.out.println("Checking for expired medications...");
-        Date currDate = new Date();
-        boolean hasExpired = false;
-
-        for (Medication med : medications) {
-            if (med.getExpiryDate().compareTo(currDate) < 0) {
-                System.out.println("Expired: " + med.getMedName());
-                hasExpired = true;
+    private void reportCount(Connection conn, String tableName) throws SQLException {
+        String query = "SELECT COUNT(*) AS total FROM " + tableName;
+        try (Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next()) {
+                System.out.println(tableName + ": " + rs.getInt("total"));
             }
         }
-        if (!hasExpired) {
-            System.out.println("No expired medications.");
+    }
+
+    // ✅ Check for expired medications
+    public void checkExpiredMedications() {
+        String query = "SELECT medName FROM Medications WHERE expiryDate < ?";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setDate(1, new java.sql.Date(new Date().getTime()));
+            ResultSet rs = stmt.executeQuery();
+            boolean hasExpired = false;
+            while (rs.next()) {
+                System.out.println("Expired: " + rs.getString("medName"));
+                hasExpired = true;
+            }
+            if (!hasExpired) System.out.println("No expired medications.");
+        } catch (SQLException e) {
+            System.out.println("Error checking expired medications: " + e.getMessage());
         }
     }
 }
