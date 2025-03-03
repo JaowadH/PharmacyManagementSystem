@@ -1,10 +1,18 @@
 package menuUtils;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import medTracker.*;
 
-import static menuUtils.MenuUtils.readDoctorsFromJson;
-import static menuUtils.MenuUtils.readPatientsFromJson;
+import static medTracker.Doctor.fromDoctorJson;
+import static medTracker.Patient.fromPatientJson;
+
 /**
  * The MedicationTrackingSystem class manages patients, doctors, medications,
  * and prescriptions within a pharmacy management system.
@@ -123,10 +131,74 @@ public class MedicationTrackingSystem {
         }
     }
 
-    /**
-     * Generates a report of the current state of the system, including the
-     * number of patients, doctors, medications, and prescriptions.
-     */
+    public static void savePatientToJson(List<Patient> patients, String filePath) {
+        JSONArray jsonArray = new JSONArray();
+        for (Patient patient : patients) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", patient.getId());
+            jsonObject.put("name", patient.getName());
+            jsonObject.put("age", patient.getAge());
+            jsonObject.put("phoneNumber", patient.getPhoneNumber());
+
+            jsonArray.add(jsonObject);
+        }
+        try (FileWriter fileWriter = new FileWriter(filePath)) { // Append mode
+            fileWriter.write(jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Patient> readPatientsFromJson(String filePath) {
+        List<Patient> patients = new ArrayList<>();
+        try (FileReader fileReader = new FileReader(filePath)) {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader); // Parse the file into a JSONArray
+
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+                patients.add(fromPatientJson(jsonObject)); // Convert JSON object to Patient and add to the list
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return patients;
+    }
+
+    public static void saveDoctorToJson(List<Doctor> doctors, String filePath) {
+        JSONArray jsonArray = new JSONArray();
+        for (Doctor doctor : doctors) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", doctor.getId());
+            jsonObject.put("name", doctor.getName());
+            jsonObject.put("age", doctor.getAge());
+            jsonObject.put("phoneNumber", doctor.getPhoneNumber());
+            jsonObject.put("specialization", doctor.getSpecialization());
+
+            jsonArray.add(jsonObject);
+        }
+        try (FileWriter fileWriter = new FileWriter(filePath)) { // Append mode
+            fileWriter.write(jsonArray.toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<Doctor> readDoctorsFromJson(String filePath) {
+        List<Doctor> doctors = new ArrayList<>();
+        try (FileReader fileReader = new FileReader(filePath)) {
+            JSONParser jsonParser = new JSONParser();
+            JSONArray jsonArray = (JSONArray) jsonParser.parse(fileReader); // Parse the file into a JSONArray
+
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+                doctors.add(fromDoctorJson(jsonObject));
+            }
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+        return doctors;
+    }
 
     public void generateReport() {
         String patientPath = "src/main/java/medTracker/patients.json";

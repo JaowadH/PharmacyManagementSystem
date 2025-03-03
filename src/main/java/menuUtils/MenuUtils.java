@@ -6,7 +6,7 @@ import medTracker.*;
 
 public class MenuUtils {
 
-    // ✅ Add a patient
+    // Add a patient
     public static void addPatient(MedicationTrackingSystem MTS, Scanner scanner) {
         int patientID = getValidInt(scanner, "Enter Patient ID: ");
         scanner.nextLine(); // Consume newline
@@ -24,7 +24,7 @@ public class MenuUtils {
         MTS.addPatient(newPatient);
     }
 
-    // ✅ Add a doctor
+    // Add a doctor
     public static void addDoctor(MedicationTrackingSystem MTS, Scanner scanner) {
         int doctorID = getValidInt(scanner, "Enter Doctor's ID: ");
         scanner.nextLine();
@@ -45,7 +45,7 @@ public class MenuUtils {
         MTS.addDoctor(newDoctor);
     }
 
-    // ✅ Add a medication
+    // Add a medication
     public static void addMed(MedicationTrackingSystem MTS, Scanner scanner) {
         int medID = getValidInt(scanner, "Enter Medication ID: ");
         scanner.nextLine();
@@ -63,37 +63,37 @@ public class MenuUtils {
         MTS.addMedication(newMed);
     }
 
-    // ✅ Print System Report (Fixed)
+    // Print System Report (Fixed)
     public static void printSystemReport(MedicationTrackingSystem MTS) {
         MTS.generateReport();
     }
 
-    // ✅ Check expired meds (Fixed)
+    // Check expired meds (Fixed)
     public static void checkExpiredMeds(MedicationTrackingSystem MTS) {
         MTS.checkExpiredMedications();
     }
 
-    // ✅ Process a new prescription (Placeholder for now)
+    // Process a new prescription (Placeholder for now)
     public static void processPrescription(MedicationTrackingSystem MTS, Scanner scanner) {
         System.out.println("Processing prescription... (Implementation needed)");
     }
 
-    // ✅ Print all scripts for a specified doctor (Placeholder)
+    // Print all scripts for a specified doctor (Placeholder)
     public static void printDoctorPrescriptions(MedicationTrackingSystem MTS, Scanner scanner) {
         System.out.println("Printing doctor's prescriptions... (Implementation needed)");
     }
 
-    // ✅ Restock pharmacy (Placeholder)
+    // Restock pharmacy (Placeholder)
     public static void restockPharmacy(MedicationTrackingSystem MTS) {
         System.out.println("Restocking pharmacy... (Implementation needed)");
     }
 
-    // ✅ Print all scripts for a specified patient (Placeholder)
+    // Print all scripts for a specified patient (Placeholder)
     public static void printPatientPrescriptions(MedicationTrackingSystem MTS, Scanner scanner) {
         System.out.println("Printing patient's prescriptions... (Implementation needed)");
     }
 
-    // ✅ Utility function to get valid integer input
+    // Utility function to get valid integer input
     private static int getValidInt(Scanner scanner, String prompt) {
         while (true) {
             System.out.print(prompt);

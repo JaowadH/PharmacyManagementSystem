@@ -36,7 +36,7 @@ public class Menu {
             switch (choice) {
                 case 1 -> MenuUtils.addPatient(MTS, scanner);
                 case 2 -> MenuUtils.addDoctor(MTS, scanner);
-                case 3 -> MenuUtils.addMed(MTS, scanner);  // ✅ Fixed missing method reference
+                case 3 -> MenuUtils.addMed(MTS, scanner);  //  Fixed missing method reference
                 case 4 -> MenuUtils.printSystemReport(MTS);
                 case 5 -> MenuUtils.checkExpiredMeds(MTS);
                 case 6 -> MenuUtils.processPrescription(MTS, scanner);
